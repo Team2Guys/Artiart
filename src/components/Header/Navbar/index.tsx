@@ -82,8 +82,8 @@ const Navbar: React.FC = () => {
               >
                 <SearchData />
               </Modal>
-           <Link href={"/"}><FaRegUser size={20} /></Link>
-           <Link href={"/"}><AiOutlineShoppingCart size={20} /></Link>
+           <Link href={"/account"}><FaRegUser size={20} /></Link>
+           <Link href={"/cart"}><AiOutlineShoppingCart size={20} /></Link>
             </div>
             <div className="lg:hidden mt-[9px]">
               <button
