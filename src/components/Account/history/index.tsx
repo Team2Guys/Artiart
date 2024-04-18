@@ -14,7 +14,7 @@ const History = () => {
         <HeadingH3 className='font-light' title={"Account details"}/>
         <Para14 className='font-normal' title={"Muhammad Ahmad"}/>
         <Para14 className='font-normal' title={"United Arab Emirates"}/>
-        <div>
+        <div> 
             <Link className='underline' href={"address"}>View addresses</Link>
         </div>
 
