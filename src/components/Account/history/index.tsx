@@ -15,6 +15,7 @@ const History = () => {
         <Para14 className='font-normal' title={"Muhammad Ahmad"}/>
         <Para14 className='font-normal' title={"United Arab Emirates"}/>
         <div> 
+          
             <Link className='underline' href={"address"}>View addresses</Link>
         </div>
 
