@@ -33,8 +33,7 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-
-const selectoption=[
+const selectoption = [
   { title: 'Dubai' },
   { title: 'Abu Dhabi' },
   { title: 'Sharjah' },
@@ -42,27 +41,35 @@ const selectoption=[
   { title: 'Ras Al Khaima' },
   { title: 'Umm Al Quwain' },
   { title: 'Fujairah' },
-]
-
+];
 
 const Checkout = () => {
   const [cartproduct, setCartProduct] = useState<any[]>([]);
   const [loading, setloading] = useState<boolean>(false);
+  const [subtotal, setSubtotal] = useState<number>(0);
   const searchParams = useSearchParams();
   const search = searchParams.get('subtotal');
+
+  const calculateSubtotal = (cartItems: any[]) => {
+    return cartItems.reduce((total, item) => total + item.totalPrice, 0);
+  };
+
   const ProductHandler = () => {
     let Products = localStorage.getItem('cart');
-
     if (Products && JSON.parse(Products).length > 0) {
       const cartItems = JSON.parse(Products || '[]');
       setCartProduct(cartItems);
+      const calculatedSubtotal = calculateSubtotal(cartItems);
+      setSubtotal(calculatedSubtotal);
+      localStorage.setItem('subtotal', JSON.stringify(calculatedSubtotal));
       console.log(cartItems, 'cartItems');
     }
   };
   useEffect(() => {
     ProductHandler();
   }, []);
-  const parseSubtotal = search ? JSON.parse(search) : null;
+  // const parseSubtotal = search ? JSON.parse(search) : null;
+  const parseSubtotal = subtotal;
   const [billingData, setBillingData] = useState({
     first_name: '',
     last_name: '',
@@ -78,15 +85,12 @@ const Checkout = () => {
     address: '',
   });
 
-
-
-
   const handlePayment = async () => {
     try {
       let totalPayment =
         parseSubtotal > 100 ? parseSubtotal : parseSubtotal + 15;
       // Step 1: Authenticate and get the token
-      setloading(true)
+      setloading(true);
       const authResponse = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/authenticate`,
       );
@@ -117,23 +121,20 @@ const Checkout = () => {
       }
     } catch (error) {
       console.error('Payment Error:', error);
-    }finally{
-      setloading(false)
+    } finally {
+      setloading(false);
     }
   };
-
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setBillingData({ ...billingData, [name]: value });
   };
 
-  const handleSelectChange = ( value: string) => {
-     setBillingData({ ...billingData, state: value });
-    }
-console.log(billingData, 
-  "billingData"
-)
+  const handleSelectChange = (value: string) => {
+    setBillingData({ ...billingData, state: value });
+  };
+  console.log(billingData, 'billingData');
 
   return (
     <>
@@ -242,72 +243,48 @@ console.log(billingData,
             </Col>
 
             <Col span={12}>
-            <Form.Item<FieldType>
-              name="country"
-              rules={[{ required: true, message: 'Select country' }]}
-              label={'Country/Region'}
-            >
-     
-
-
-<Select
-      className="h-[52px]"
-           placeholder='Country/Region'
-           value={billingData.country}
-     onChange={(value)=>{setBillingData({ ...billingData, country: value })}}
-    >
-      {[{ title: 'United Arab Emirates' }].map((option, index) => (
-        <Option value={option.title} key={index}>
-          {option.title}
-        </Option>
-      ))}
-    </Select>
-
-            </Form.Item>
+              <Form.Item<FieldType>
+                name="country"
+                rules={[{ required: true, message: 'Select country' }]}
+                label={'Country/Region'}
+              >
+                <Select
+                  className="h-[52px]"
+                  placeholder="Country/Region"
+                  value={billingData.country}
+                  onChange={(value) => {
+                    setBillingData({ ...billingData, country: value });
+                  }}
+                >
+                  {[{ title: 'United Arab Emirates' }].map((option, index) => (
+                    <Option value={option.title} key={index}>
+                      {option.title}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
             </Col>
-
 
             <Col span={12}>
               <Form.Item<FieldType>
-                label='State'
+                label="State"
                 name="state"
                 rules={[{ required: true, message: 'Please select state' }]}
               >
-
-                
-                {/* <Select
-                  name="state"
-                  placeholder='Select you state'
-                  value={billingData.state ? billingData.state : 'changes'}
+                <Select
+                  className="h-[52px]"
+                  placeholder="Select you state"
+                  value={billingData.state}
                   onChange={handleSelectChange}
-                  selectoption={[
-                    { title: 'Dubai' },
-                    { title: 'Abu Dhabi' },
-                    { title: 'Sharjah' },
-                    { title: 'Ajman' },
-                    { title: 'Ras Al Khaima' },
-                    { title: 'Umm Al Quwain' },
-                    { title: 'Fujairah' },
-                  ]}
-                /> */}
-
-<Select
-      className="h-[52px]"
-      placeholder='Select you state'
-      value={billingData.state}
-      onChange={handleSelectChange}
-    >
-      {selectoption.map((option, index) => (
-        <Option value={option.title} key={index}>
-          {option.title}
-        </Option>
-      ))}
-    </Select>
-
-
+                >
+                  {selectoption.map((option, index) => (
+                    <Option value={option.title} key={index}>
+                      {option.title}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
-           
           </Row>
 
           <div className="p-2">
@@ -393,7 +370,7 @@ console.log(billingData,
                             Products Prices
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                            {parseSubtotal ? parseSubtotal : ''}
+                            {parseSubtotal ? parseSubtotal : 'none'}
                           </td>
                         </tr>
 
@@ -424,7 +401,7 @@ console.log(billingData,
                         onClick={handlePayment}
                         disabled={loading}
                       >
-                    { loading ? <Loader color='#fff'/> :   "Place Order"}
+                        {loading ? <Loader color="#fff" /> : 'Place Order'}
                       </button>
                     </div>
                   </div>

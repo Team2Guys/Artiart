@@ -26,7 +26,9 @@ const ProductDetail = ({ parsedProduct }: any) => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${parsedProduct._id}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${parsedProduct._id}`,
+      );
       setReviews(response.data.reviews);
     } catch (err) {
       console.error(err.message);
@@ -135,15 +137,21 @@ const ProductDetail = ({ parsedProduct }: any) => {
     },
     {
       label: 'Additional Information',
-      content: parsedProduct.modelDetails ? <DetailTable keypoint={parsedProduct.modelDetails} /> : null,
+      content: parsedProduct.modelDetails ? (
+        <DetailTable keypoint={parsedProduct.modelDetails} />
+      ) : null,
     },
     {
       label: 'Reviews',
-      content: <Review reviews={reviews} productId={parsedProduct._id} fetchReviews={fetchReviews} />,
+      content: (
+        <Review
+          reviews={reviews}
+          productId={parsedProduct._id}
+          fetchReviews={fetchReviews}
+        />
+      ),
     },
   ];
-
-
 
   return (
     <>
@@ -201,10 +209,11 @@ const ProductDetail = ({ parsedProduct }: any) => {
                     return (
                       <p
                         key={index}
-                        className={`py-2 px-4 w-[45px] h-[40px] rounded-lg focus:outline-none whitespace-nowrap hover:bg-blue-100 cursor-pointer ${selectedValue === button.colorName
-                          ? `bg-blue-100 border-2 border-blue-500`
-                          : `bg-${button.colorName}-500  ${button.colorName.toLowerCase() == 'black' || button.colorName.toLowerCase() == '#000' ? 'text-white' : 'text-black'} border border-${button.colorName}-600`
-                          }`}
+                        className={`py-2 px-4 w-[45px] h-[40px] rounded-lg focus:outline-none whitespace-nowrap hover:bg-blue-100 cursor-pointer ${
+                          selectedValue === button.colorName
+                            ? `bg-blue-100 border-2 border-blue-500`
+                            : `bg-${button.colorName}-500  ${button.colorName.toLowerCase() == 'black' || button.colorName.toLowerCase() == '#000' ? 'text-white' : 'text-black'} border border-${button.colorName}-600`
+                        }`}
                         style={{ backgroundColor: `#${button.colorName}` }}
                         onClick={() =>
                           handleChange({ target: { value: button.colorName } })
@@ -285,15 +294,8 @@ const ProductDetail = ({ parsedProduct }: any) => {
                     title={'Add to Cart'}
                   />
                   <Link
-                    href={{
-                      pathname: '/checkout',
-                      query: {
-                        subtotal: (parsedProduct.discountPrice
-                          ? parsedProduct.discountPrice
-                          : parsedProduct.price
-                        ).toString(),
-                      },
-                    }}
+                    onClick={handleAddToCart}
+                    href={{ pathname: '/checkout' }}
                   >
                     <Button
                       className={
@@ -304,7 +306,6 @@ const ProductDetail = ({ parsedProduct }: any) => {
                   </Link>
                 </>
               )}
-
             </div>
           </div>
           <DetailTabs tabs={tabs} />

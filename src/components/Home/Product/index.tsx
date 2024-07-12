@@ -22,7 +22,7 @@ const Product = ({ productItems, productsLoading, HeadingName }: PROPS) => {
         productItems={productItems}
         productsLoading={productsLoading}
       />
-      <div className="text-center mt-5 mb-5">
+      <div className="text-center mt-5 mb-5 ">
         <Button
           className="bg-black text-white px-5 "
           title="View More"
