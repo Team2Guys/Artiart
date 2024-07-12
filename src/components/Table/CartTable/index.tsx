@@ -274,12 +274,8 @@ const CartTable: React.FC = () => {
               calculated at checkout.
             </p>
             <Link
-              // href={"/checkout"}
               href={{
                 pathname: `/checkout`,
-                query: {
-                  subtotal: JSON.stringify(subtotal),
-                },
               }}
             >
               <Button
