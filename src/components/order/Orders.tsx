@@ -66,20 +66,6 @@ console.log(authentication_response, "authentication_response")
     },
 
     {
-      title: 'Checkout Status',
-      dataIndex: 'checkout',
-      key: 'checkout',
-
-      render: (text: any, record: any) => {
-        const checkout = record.checkout ? "true" : "false"
-
-        return <span>{checkout}</span>;
-      },
-
-    },
-
-
-    {
       title: 'Amount ',
       dataIndex: 'amount_cents',
       key: 'amount_cents',
@@ -188,14 +174,9 @@ console.log(authentication_response, "authentication_response")
         }
       }
       );
-      response.data.Orders
-
-      setOrders(response.data.Orders);
-      console.log(response.data.Orders, "  response.data.Orders")
-      if (response.data.Orders.some((order: any) => order.transactionId)) {
-
-        columns.push(transactionIdColumn);
-      }
+   let filteredArray =    response.data.Orders && response.data.Orders.filter((item:any)=>item.paymentStatus)
+      setOrders(filteredArray);
+    
     } catch (error) {
       console.log('Error fetching data:', error);
     } finally {

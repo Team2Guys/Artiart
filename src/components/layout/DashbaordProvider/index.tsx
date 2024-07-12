@@ -23,6 +23,8 @@ import Orders from 'components/order/Orders';
 import { FcSalesPerformance } from 'react-icons/fc';
 import { MdOutlineCategory } from 'react-icons/md';
 import { GrDocumentPerformance } from 'react-icons/gr';
+import AbundantOrders from 'components/order/AbundantOrders';
+import { FaEnvelopesBulk } from 'react-icons/fa6';
 
 const DashboardProvider = ({ children }: any) => {
   const { Header, Sider, Content } = Layout;
@@ -85,6 +87,12 @@ const DashboardProvider = ({ children }: any) => {
       icon: <GrDocumentPerformance />,
       label: 'Orders',
       onClick: () => handleAddProductsClick('Orders'),
+    },
+    {
+      key: '5',
+      icon: <FaEnvelopesBulk />,
+      label: 'Abundant orders',
+      onClick: () => handleAddProductsClick('AbundentOrders'),
     },
   ];
 
@@ -239,6 +247,7 @@ const DashboardProvider = ({ children }: any) => {
             <SEO />
           ) : 
           selectedMenu === 'Orders' ? <Orders/>:
+          selectedMenu === 'AbundentOrders' ? <AbundantOrders/>:
           
           (
             <CategoryForm
