@@ -36,13 +36,18 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
           VPS_PORT: ${{ secrets.VPS_PORT }}
         run: |
-          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no -p $VPS_PORT $VPS_USER@$VPS_HOST "
-          cd /var/www/artiart &&
-          git pull origin main &&
-          node -v &&
-          npm -v &&
-          npm install &&
-          npm run build &&
-          pm2 restart 0 &&
+          sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no -p $VPS_PORT $VPS_USER@$VPS_HOST <<EOF
+          if ! command -v node &> /dev/null
+          then
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+          fi
+          cd /var/www/artiart
+          git pull origin main
+          node -v
+          npm -v
+          npm install
+          npm run build
+          pm2 restart 0
           exit
-          "
+          EOF
