@@ -54,6 +54,7 @@ const Checkout = () => {
     return cartItems.reduce((total, item) => total + item.totalPrice, 0);
   };
 
+
   const ProductHandler = () => {
     let Products = localStorage.getItem('cart');
     if (Products && JSON.parse(Products).length > 0) {
@@ -68,7 +69,7 @@ const Checkout = () => {
   useEffect(() => {
     ProductHandler();
   }, []);
-  // const parseSubtotal = search ? JSON.parse(search) : null;
+
   const parseSubtotal = subtotal;
   const [billingData, setBillingData] = useState({
     first_name: '',
@@ -102,13 +103,16 @@ const Checkout = () => {
         { token, amount: totalPayment },
       );
       const orderId = orderResponse.data.orderId;
+let orderedProductDetails:any =[]
+ if(cartproduct.length > 0){
+  cartproduct.forEach((item)=>orderedProductDetails.push({name:item.name, color: item.color, Count: item.count, price: item.price, id: item.id, totalPrice: item.totalPrice}))
+ }
 
-      // Step 3: Generate the payment key
 
       try {
         const paymentKeyResponse = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/payment_key`,
-          { token, orderId, amount: totalPayment, billingData },
+          { token, orderId, amount: totalPayment, billingData,orderedProductDetails },
         );
         const paymentKey = paymentKeyResponse.data.paymentKey;
 
@@ -134,8 +138,7 @@ const Checkout = () => {
   const handleSelectChange = (value: string) => {
     setBillingData({ ...billingData, state: value });
   };
-  console.log(billingData, 'billingData');
-
+ 
   return (
     <>
       <Navbar />

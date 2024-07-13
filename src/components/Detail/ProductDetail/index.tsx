@@ -92,7 +92,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
     }
 
     const newCartItem = {
-      id: parsedProduct.id,
+      id: parsedProduct._id,
       name: parsedProduct.name,
       price: parsedProduct.price,
       imageUrl: parsedProduct.imageUrl,
