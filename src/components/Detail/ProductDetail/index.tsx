@@ -95,16 +95,15 @@ const ProductDetail = ({ parsedProduct }: any) => {
       id: parsedProduct._id,
       name: parsedProduct.name,
       price: parsedProduct.price,
-      imageUrl: parsedProduct.imageUrl,
+      imageUrl: [parsedProduct.posterImageUrl],
       color: selectedValue,
       count: count,
       totalPrice: parsedProduct.price * count,
     };
 
     let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItemIndex = existingCart.findIndex(
-      (item) => item.id === parsedProduct.id && item.color === selectedValue,
-    );
+    const existingItemIndex = existingCart.findIndex((item) => item.id === parsedProduct._id && item.color === selectedValue,);
+    console.log(existingItemIndex, " existingItemIndex")
 
     if (existingItemIndex !== -1) {
       existingCart[existingItemIndex].count += count;

@@ -85,7 +85,7 @@ const Checkout = () => {
     country: '',
     address: '',
   });
-  
+
 
   const handlePayment = async () => {
     try {
@@ -104,16 +104,17 @@ const Checkout = () => {
         { token, amount: totalPayment },
       );
       const orderId = orderResponse.data.orderId;
-let orderedProductDetails:any =[]
- if(cartproduct.length > 0){
-  cartproduct.forEach((item)=>orderedProductDetails.push({name:item.name, color: item.color, Count: item.count, price: item.price, id: item.id, totalPrice: item.totalPrice}))
- }
+      let orderedProductDetails: any = []
+      if (cartproduct.length > 0) {
+        cartproduct.forEach((item) => orderedProductDetails.push({ name: item.name, color: item.color, Count: item.count, price: item.price, id: item.id, totalPrice: item.totalPrice, posterImageUrl: item.imageUrl[0] }))
+      }
 
+      console.log(orderedProductDetails, "orderedProductDetails")
 
       try {
         const paymentKeyResponse = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/payment_key`,
-          { token, orderId, amount: totalPayment, billingData,orderedProductDetails },
+          { token, orderId, amount: totalPayment, billingData, orderedProductDetails },
         );
         const paymentKey = paymentKeyResponse.data.paymentKey;
 
@@ -123,6 +124,7 @@ let orderedProductDetails:any =[]
           'error',
           'Something is wrong. Please check the input fields.',
         );
+        throw new Error("Something is wrong. Please check the input fields.")
       }
     } catch (error) {
       console.error('Payment Error:', error);
@@ -139,7 +141,7 @@ let orderedProductDetails:any =[]
   const handleSelectChange = (value: string) => {
     setBillingData({ ...billingData, state: value });
   };
- 
+
   return (
     <>
       <Navbar />
