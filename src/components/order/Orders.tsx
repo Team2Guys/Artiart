@@ -8,7 +8,7 @@ import { Table, Modal, Button } from 'antd';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { LuView } from 'react-icons/lu';
 import Image from 'next/image';
-
+import qs from 'qs';
 function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [orderLoading, setOrderLoading] = useState(false);
@@ -18,17 +18,28 @@ function Orders() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const deliveryCreateHandler = async () => {
-    let tokenbody = {
-      client_id: process.env.NEXT_PUBLIC_fenix_fenix_client_id,
-      client_secret: process.env.NEXT_PUBLIC_fenix_fenix_client_secret,
-      grant_type: process.env.NEXT_PUBLIC_fenix_grant_type,
-    };
-    let authentication_response = await axios.post(
-      `${process.env.NEXT_PUBLIC_fenix_baseUrl}/user/token`,
-      tokenbody,
-    );
+    const data = qs.stringify({
+      grant_type: 'client_credentials',
+      client_id: process.env.NEXT_PUBLIC_FENIX_CLIENT_ID,
+      client_secret: process.env.NEXT_PUBLIC_FENIX_CLIENT_SECRET,
+    });
 
-    console.log(authentication_response, 'authentication_response');
+    const config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'https://partner.stg.fenix.life/user/token',
+      headers: {},
+      data: data,
+    };
+
+    try {
+      const response = await axios.request(config);
+      alert('Bhai kuch to chal raha hai!!!');
+      console.log(JSON.stringify(response.data));
+    } catch (error) {
+      alert('Bhai tm se na ho pai ga');
+      console.log(error);
+    }
   };
 
   const columns = [
@@ -125,23 +136,6 @@ function Orders() {
       },
     },
     {
-      title: 'Create Delivery Order',
-      dataIndex: 'transactionDate',
-      key: 'transactionDate',
-      searchable: false,
-      render: (text: any, record: any) => {
-        return (
-          <span className="flex justify-center">
-            <TbTruckDelivery
-              onClick={deliveryCreateHandler}
-              className="cursor-pointer text-cyan-500"
-              size={30}
-            />
-          </span>
-        );
-      },
-    },
-    {
       title: 'View Products',
       dataIndex: 'transactionDate',
       key: 'transactionDate',
@@ -152,6 +146,23 @@ function Orders() {
             <LuView
               onClick={() => viewOrderHandler(record)}
               className="cursor-pointer text-green-500"
+              size={30}
+            />
+          </span>
+        );
+      },
+    },
+    {
+      title: 'Create Delivery',
+      dataIndex: 'transactionDate',
+      key: 'transactionDate',
+      searchable: false,
+      render: (text: any, record: any) => {
+        return (
+          <span className="flex justify-center">
+            <TbTruckDelivery
+              onClick={deliveryCreateHandler}
+              className="cursor-pointer text-cyan-500"
               size={30}
             />
           </span>
@@ -226,8 +237,6 @@ function Orders() {
         ).reverse();
 
       setFilteredOrders(filteredArray);
-      console.log('Hai bhai kasah aah');
-      console.log(filteredArray);
       setOrders(filteredArray);
     } catch (error) {
       console.log('Error fetching data:', error);
