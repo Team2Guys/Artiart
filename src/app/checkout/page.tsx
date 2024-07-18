@@ -47,6 +47,7 @@ const Checkout = () => {
   const [cartproduct, setCartProduct] = useState<any[]>([]);
   const [loading, setloading] = useState<boolean>(false);
   const [subtotal, setSubtotal] = useState<number>(0);
+  const [shipmentFee, setShipmentFee] = useState<number | string>(0);
   const searchParams = useSearchParams();
   const search = searchParams.get('subtotal');
 
@@ -70,6 +71,10 @@ const Checkout = () => {
     ProductHandler();
   }, []);
 
+  console.log(shipmentFee, "shipmentFee"
+  )
+
+
   const parseSubtotal = subtotal;
   const [billingData, setBillingData] = useState({
     first_name: '',
@@ -89,8 +94,8 @@ const Checkout = () => {
 
   const handlePayment = async () => {
     try {
-      let totalPayment =
-        parseSubtotal > 100 ? parseSubtotal : parseSubtotal + 15;
+      let chargesConversion = shipmentFee == "Free" || !shipmentFee ? null : Number(shipmentFee)
+      let totalPayment =  chargesConversion  ? chargesConversion + parseSubtotal : parseSubtotal;
       // Step 1: Authenticate and get the token
       setloading(true);
       const authResponse = await axios.post(
@@ -106,15 +111,14 @@ const Checkout = () => {
       const orderId = orderResponse.data.orderId;
       let orderedProductDetails: any = []
       if (cartproduct.length > 0) {
-        cartproduct.forEach((item) => orderedProductDetails.push({ name: item.name, color: item.color, Count: item.count, price: item.price, id: item.id, totalPrice: item.totalPrice, posterImageUrl: item.imageUrl[0] }))
+        cartproduct.forEach((item) => orderedProductDetails.push({ name: item.name, color: item.color, Count: item.count, Product_price: item.price, id: item.id, totalPrice: item.totalPrice, posterImageUrl: item.imageUrl.find((Images: any) => Images.colorCode == item.color) }))
       }
 
-      console.log(orderedProductDetails, "orderedProductDetails")
 
       try {
         const paymentKeyResponse = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/payment_key`,
-          { token, orderId, amount: totalPayment, billingData, orderedProductDetails },
+          { token, orderId, amount: totalPayment, billingData, orderedProductDetails, shippment_Fee: shipmentFee },
         );
         const paymentKey = paymentKeyResponse.data.paymentKey;
 
@@ -141,26 +145,39 @@ const Checkout = () => {
   const handleSelectChange = (value: string) => {
     setBillingData({ ...billingData, state: value });
   };
- 
-const AddresAAray =[
-  {
-    state:'dubai',
-    charges:15,
-    discountCharges:150
-  },
-  {
-    state:'sharjah',
-    charges:20,
-    discountCharges:200
-  },
-  {
-    state:'abu dhabi',
-    charges:20,
-    discountCharges:200
-  },
 
-]
+  const AddresAAray = [
+    {
+      state: 'dubai',
+      charges: 15,
+      discountCharges: 150
+    },
+    {
+      state: 'sharjah',
+      charges: 20,
+      discountCharges: 200
+    },
+    {
+      state: 'abu dhabi',
+      charges: 20,
+      discountCharges: 200
+    },
 
+  ]
+
+
+  useEffect(() => {
+    const calculateCharges = () => {
+      const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
+
+      const charges = matchingItem ? (parseSubtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (parseSubtotal > 250 ? 'Free' : 25);
+
+      // Set the shipment fee state
+      setShipmentFee(charges);
+    };
+
+    calculateCharges();
+  }, [billingData.state, parseSubtotal, AddresAAray]);
   return (
     <>
       <Navbar />
@@ -330,7 +347,7 @@ const AddresAAray =[
                           >
                             PRODUCT
                           </th>
-                         
+
                           <th
                             scope="col"
                             className="px-6 py-3 text-start text-[12px] font-normal text-gray-500 uppercase w-2/12"
@@ -345,17 +362,20 @@ const AddresAAray =[
                           <tbody className="divide-y divide-gray-200">
                             {cartproduct.map((array: any, index: number) => {
                               let color: string;
+                              let filteredImage = array.imageUrl.find((imageObject: any) => imageObject.colorCode == array.color)
                               return (
                                 <tr key={index}>
                                   <td className="px-2 py-2 text-sm ">
                                     <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
                                       <Image
                                         className="rounded-md"
-                                        src={array.imageUrl[0].imageUrl}
+                                        src={filteredImage.imageUrl && filteredImage.imageUrl}
+                                        alt={array.name}
                                         width={50}
                                         height={50}
-                                        alt="cart image"
+
                                       />
+
                                       <div className="space-y-2">
                                         <Para14
                                           className="hover:underline transition duration-200"
@@ -398,22 +418,20 @@ const AddresAAray =[
                           <td className="px-6 py-4 whitespace-nowrap text-[14px] poppins-thin text-gray-800">
                             Shippment Fee
                           </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                        
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+
 
                             {
-    (() => {
-      const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
-    
-      const charges = matchingItem ? (parseSubtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (parseSubtotal > 250 ? 'Free' : 25);
-      
+                              (() => {
+                                const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
 
-      return (
-        <span>{charges}</span>
-      );
-    })()
-  }
-                            </td>
+                                const charges = matchingItem ? (parseSubtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (parseSubtotal > 250 ? 'Free' : 25);
+                                return (
+                                  <span>{charges}</span>
+                                );
+                              })()
+                            }
+                          </td>
                         </tr>
 
                         <tr className="odd:bg-white hover:bg-gray-100 border-b-gray-200 border">
@@ -421,22 +439,22 @@ const AddresAAray =[
                             Total
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                        
-                                  
+
+
                             {
                               (() => {
                                 const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
-                              
+
                                 const charges = matchingItem ? (parseSubtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (parseSubtotal > 250 ? 'Free' : 25);
-                                  let chargesConversion  = charges =="Free" ? null : Number(charges)
-                              
+                                let chargesConversion = charges == "Free" ? null : Number(charges)
+
                                 return (
-                                  <span>{chargesConversion ? chargesConversion+parseSubtotal : parseSubtotal}</span>
+                                  <span>{chargesConversion ? chargesConversion + parseSubtotal : parseSubtotal}</span>
                                 );
                               })()
                             }
-                              
-                      
+
+
                           </td>
                         </tr>
                       </tbody>

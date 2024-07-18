@@ -95,7 +95,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
       id: parsedProduct._id,
       name: parsedProduct.name,
       price: parsedProduct.price,
-      imageUrl: [parsedProduct.posterImageUrl],
+      imageUrl: parsedProduct.imageUrl,
       color: selectedValue,
       count: count,
       totalPrice: parsedProduct.price * count,
