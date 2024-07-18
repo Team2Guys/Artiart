@@ -80,9 +80,9 @@ const Checkout = () => {
     building: '-',
     floor: '-',
     apartment: '-',
-    state: '',
+    state: 'Dubai',
     city: '-',
-    country: '',
+    country: 'United Arab Emirates',
     address: '',
   });
 
@@ -141,6 +141,25 @@ const Checkout = () => {
   const handleSelectChange = (value: string) => {
     setBillingData({ ...billingData, state: value });
   };
+ 
+const AddresAAray =[
+  {
+    state:'dubai',
+    charges:15,
+    discountCharges:150
+  },
+  {
+    state:'sharjah',
+    charges:20,
+    discountCharges:200
+  },
+  {
+    state:'abu dhabi',
+    charges:20,
+    discountCharges:200
+  },
+
+]
 
   return (
     <>
@@ -311,12 +330,7 @@ const Checkout = () => {
                           >
                             PRODUCT
                           </th>
-                          {/* <th
-                            scope="col"
-                            className="px-6 py-3 text-start text-[12px] font-normal text-gray-500 uppercase w-2/12"
-                          >
-                            QUANTITY
-                          </th> */}
+                         
                           <th
                             scope="col"
                             className="px-6 py-3 text-start text-[12px] font-normal text-gray-500 uppercase w-2/12"
@@ -384,9 +398,22 @@ const Checkout = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-[14px] poppins-thin text-gray-800">
                             Shippment Fee
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                            {parseSubtotal > 100 ? 'Free' : 15}
-                          </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                        
+
+                            {
+    (() => {
+      const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
+    
+      const charges = matchingItem ? (parseSubtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (parseSubtotal > 250 ? 'Free' : 25);
+      
+
+      return (
+        <span>{charges}</span>
+      );
+    })()
+  }
+                            </td>
                         </tr>
 
                         <tr className="odd:bg-white hover:bg-gray-100 border-b-gray-200 border">
@@ -394,9 +421,22 @@ const Checkout = () => {
                             Total
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                            {parseSubtotal > 100
-                              ? parseSubtotal
-                              : parseSubtotal + 15}
+                        
+                                  
+                            {
+                              (() => {
+                                const matchingItem = AddresAAray.find(item => item.state.toLowerCase() === billingData.state.toLowerCase());
+                              
+                                const charges = matchingItem ? (parseSubtotal > matchingItem.discountCharges ? 'Free' : matchingItem.charges) : (parseSubtotal > 250 ? 'Free' : 25);
+                                  let chargesConversion  = charges =="Free" ? null : Number(charges)
+                              
+                                return (
+                                  <span>{chargesConversion ? chargesConversion+parseSubtotal : parseSubtotal}</span>
+                                );
+                              })()
+                            }
+                              
+                      
                           </td>
                         </tr>
                       </tbody>
