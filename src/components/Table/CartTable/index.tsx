@@ -270,17 +270,16 @@ const CartTable: React.FC = () => {
 
           <div className="text-end  border-t-2 mt-10 pt-5 space-y-2">
             <div className="flex gap-5 justify-end items-center">
-              <Para16 className="poppins-thin" title={'Subtotal'} />
+              <Para16 className="poppins-thin" title={'Sub Total :'} />
               <Para16
                 className="font-normal"
-                icon={'Dhs . '}
+                icon={'AED .'}
                 title={subtotal}
-                endicon=" AED"
               />
             </div>
             <p className="text-[12px]">
               Tax included.{' '}
-              <Link className="underline" href={'/policy'}>
+              <Link className="underline" href={'/shipping-policy'}>
                 Shipping
               </Link>{' '}
               calculated at checkout.
