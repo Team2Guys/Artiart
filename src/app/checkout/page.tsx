@@ -407,7 +407,7 @@ const Checkout = () => {
                       <tbody>
                         <tr className="odd:bg-white hover:bg-gray-100 border-b-gray-200 border  ">
                           <td className="px-6 py-4  text-[14px] poppins-thin text-gray-800">
-                            Products Prices
+                     Sub Total
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                             {parseSubtotal ? parseSubtotal : 'none'}
