@@ -1,9 +1,12 @@
 'use client'
 import axios from 'axios';
-import { error } from 'console';
+import Confetti from 'components/confetti/Confetti';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react';
+
+
+
 
 
 
@@ -27,6 +30,8 @@ export interface PaymentQueryParams {
 
 const PostPayhnalder = () => {
     const searchParams = useSearchParams()
+    const [isExploding, setIsExploding] = useState(false);
+
 
     const id = searchParams.get('id')
     const amount_cents = searchParams.get('amount_cents')
@@ -53,6 +58,8 @@ const PostPayhnalder = () => {
         created_at
     }
     const [payementDetails, setpayementDetails] = useState<PaymentQueryParams>(paymentObject)
+  
+  
     const dbFunctionHandler = async () => {
 
 
@@ -72,12 +79,18 @@ const PostPayhnalder = () => {
 
 
     useEffect(() => {
+      setIsExploding(true)
         dbFunctionHandler()
+
     }, [])
 
 
-    console.log(payementDetails, "payementDetails")
+
+
     return (
+
+      <>
+     <Confetti />
         <div>
    <div className="flex items-center justify-center h-screen">
   <div className="p-1 rounded shadow-lg bg-gradient-to-r from-purple-500 via-green-500 to-blue-500">
@@ -102,6 +115,7 @@ const PostPayhnalder = () => {
 </div>
 
         </div>
+      </>
     );
 };
 
