@@ -4,11 +4,13 @@ import axios from 'axios';
 import Loader from 'components/Loader/Loader';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
 import { useEffect, useState } from 'react';
-import { Table, Modal, Button } from 'antd';
+import { Table, Modal, Button, Spin } from 'antd';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { LuView } from 'react-icons/lu';
 import Image from 'next/image';
-import qs from 'qs';
+import { RiListView } from 'react-icons/ri';
+import showToast from 'components/Toaster/Toaster';
+
 function Orders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [orderLoading, setOrderLoading] = useState(false);
@@ -16,30 +18,59 @@ function Orders() {
   const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDeliveredCreated, setIsDeliveredCreated] = useState(false);
+  const [isDeliveryDetailsVisible, setIsDeliveryDetailsVisible] =
+    useState(false);
+  const [modelDeliveryDetails, setModelDeliveryDetails] = useState<any>(null);
+  const [deliveryLoading, setDeliveryLoading] = useState<
+    Record<string, boolean>
+  >({});
 
-  const deliveryCreateHandler = async () => {
-    const data = qs.stringify({
-      grant_type: 'client_credentials',
-      client_id: process.env.NEXT_PUBLIC_FENIX_CLIENT_ID,
-      client_secret: process.env.NEXT_PUBLIC_FENIX_CLIENT_SECRET,
-    });
-
-    const config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://partner.stg.fenix.life/user/token',
-      headers: {},
-      data: data,
-    };
-
+  const deliveryCreateHandler = async (order_id: string) => {
     try {
-      const response = await axios.request(config);
-      alert('Bhai kuch to chal raha hai!!!');
-      console.log(JSON.stringify(response.data));
+      setDeliveryLoading((prevState) => ({ ...prevState, [order_id]: true }));
+
+      const orderRecord = filteredOrders.find(
+        (order) => order.order_id === order_id,
+      );
+
+      if (!orderRecord) {
+        alert('Order not found');
+        return;
+      }
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/delivery/order`,
+        orderRecord,
+      );
+
+      console.log('Response:', res.data);
+      showToast(
+        'success',
+        'Delivery creation successful for order ' + order_id,
+      );
+
+      setFilteredOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.order_id === order_id
+            ? { ...order, deliveryStatus: true }
+            : order,
+        ),
+      );
+      getAllOrder();
     } catch (error) {
-      alert('Bhai tm se na ho pai ga');
-      console.log(error);
+      showToast('error', 'An error occurred while creating delivery');
+      console.error('Error:', error);
+    } finally {
+      setDeliveryLoading((prevState) => ({ ...prevState, [order_id]: false }));
     }
+  };
+  const handleShowDeliveryDetails = async (records: any) => {
+    let details = records.deliveryDetails;
+
+    setModelDeliveryDetails(details);
+    console.log(modelDeliveryDetails);
+    setIsDeliveryDetailsVisible(true);
   };
 
   const columns = [
@@ -158,13 +189,24 @@ function Orders() {
       key: 'transactionDate',
       searchable: false,
       render: (text: any, record: any) => {
+        const isLoading = deliveryLoading[record.order_id];
         return (
           <span className="flex justify-center">
-            <TbTruckDelivery
-              onClick={deliveryCreateHandler}
-              className="cursor-pointer text-cyan-500"
-              size={30}
-            />
+            {record.deliveryStatus ? (
+              <RiListView
+                onClick={() => handleShowDeliveryDetails(record)}
+                className="cursor-pointer text-slate-400"
+                size={30}
+              />
+            ) : isLoading ? (
+              <Spin />
+            ) : (
+              <TbTruckDelivery
+                onClick={() => deliveryCreateHandler(record.order_id)}
+                className="cursor-pointer text-cyan-500"
+                size={30}
+              />
+            )}
           </span>
         );
       },
@@ -179,6 +221,9 @@ function Orders() {
   const handleCancel = () => {
     setIsModalVisible(false);
     setSelectedOrder(null);
+  };
+  const handleHideDeliveryDetails = () => {
+    setIsDeliveryDetailsVisible(false);
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -323,6 +368,47 @@ function Orders() {
               </ul>
             ) : (
               <p>No products available for this order.</p>
+            )}
+          </Modal>
+          <Modal
+            title="Delivery Details"
+            visible={isDeliveryDetailsVisible}
+            onCancel={handleHideDeliveryDetails}
+            footer={[
+              <Button key="close" onClick={handleHideDeliveryDetails}>
+                Close
+              </Button>,
+            ]}
+          >
+            {modelDeliveryDetails ? (
+              <ul className="py-2">
+                <li className="mb-3 flex flex-col bg-red">
+                  <p>
+                    Finix Order Id:
+                    <span className="ml-1 font-bold">
+                      {modelDeliveryDetails.order_id}
+                    </span>
+                  </p>
+                  <p>
+                    Order Status:
+                    <span className="ml-1 text-orange-500 font-bold">
+                      {modelDeliveryDetails.order_status}
+                    </span>
+                  </p>
+                  <p>Tracking Number: {modelDeliveryDetails.tracking_number}</p>
+                  <p>
+                    Tracking URL:{' '}
+                    <span className="font-bold">
+                      {modelDeliveryDetails.tracking_url}
+                    </span>
+                  </p>
+                  {/* <p>
+                    Airways Bill URL: {modelDeliveryDetails.airways_bill_url}{' '}
+                  </p> */}
+                </li>
+              </ul>
+            ) : (
+              <p>No delivery details available.</p>
             )}
           </Modal>
         </>

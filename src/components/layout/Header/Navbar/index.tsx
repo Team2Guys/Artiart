@@ -17,16 +17,20 @@ import whatsapp from '../../../../../public/assets/images/whatsapp.png';
 import call from '../../../../../public/assets/images/call.svg';
 import { PiBag } from 'react-icons/pi';
 import { generateSlug } from 'Data/data';
-
+import { IoIosClose } from 'react-icons/io';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { Para12 } from 'components/Common/Paragraph';
 const Navbar: React.FC = () => {
   const [scrollingUp, setScrollingUp] = useState(true);
   const [open, setOpen] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isOpenFlag, setisOpenFlag] = useState();
   const inputRef = useRef<any>(null);
   const [category, setCategory] = useState<any[]>();
-  const [loading, setLoading] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartProduct, setCartProduct] = useState<any[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [cartVisible, setCartVisible] = useState(false); // New state for cart visibility
+
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -95,6 +99,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
+        
       <nav
         className={` text-black border-t  sticky top-0  z-20 shadow-md  ${scrollingUp ? defaultStyle : scrolledStyle}`}
       >

@@ -1,12 +1,12 @@
 // @ts-nocheck
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Thumbnail from 'components/Carousel/Thumbnail';
 import Container from 'components/Common/Container';
 import { HeadingH3, HeadingH6 } from 'components/Common/Heading';
 import { Para12, Para14, Para16 } from 'components/Common/Paragraph';
 import Link from 'next/link';
-import { Radio, RadioChangeEvent, message } from 'antd';
+import { Modal, Radio, RadioChangeEvent, message } from 'antd';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 import Button from 'components/Common/Button';
 import DetailTable from 'components/Table/DetailTable';
@@ -15,10 +15,63 @@ import Checkout from 'app/checkout/page';
 import DetailTabs from 'components/Tabs';
 import Review from '../Review';
 import axios from 'axios';
+import { IoIosClose } from 'react-icons/io';
+import Image from 'next/image';
+import cartimage from '../../../../public/assets/images/art/art3.png';
+import { FaRegTrashAlt } from 'react-icons/fa';
 
 const ProductDetail = ({ parsedProduct }: any) => {
   const [count, setCount] = useState(1);
   const [reviews, setReviews] = useState([]);
+  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartProduct, setCartProduct] = useState<any[]>([]);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [cartVisible, setCartVisible] = useState(false); // New state for cart visibility
+
+  const fetchCartProducts = () => {
+    const products = localStorage.getItem('cart');
+    if (products && JSON.parse(products).length > 0) {
+      const cartItems = JSON.parse(products || '[]');
+      setCartProduct(cartItems);
+  
+      const sub = cartItems.reduce(
+        (total: number, item: any) => total + item.totalPrice,
+        0,
+      );
+      setSubtotal(sub); // Set subtotal
+      setCartVisible(true); // Show cart section if there are items
+    } else {
+      setCartVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartProducts();
+    const handleCartChange = () => fetchCartProducts();
+    window.addEventListener('cartChanged', handleCartChange);
+    return () => {
+      window.removeEventListener('cartChanged', handleCartChange);
+    };
+  }, []);
+
+  const removeItemFromCart = (index: number) => {
+    Modal.confirm({
+      title: 'Confirm',
+      icon: null,
+      content: 'Are you sure you want to remove this item from your cart?',
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk() {
+        const updatedCart = [...cartProduct];
+        updatedCart.splice(index, 1);
+        setCartProduct(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        window.dispatchEvent(new Event('cartChanged'));
+        fetchCartProducts(); // Refresh cart visibility
+      },
+    });
+  };
+
 
   useEffect(() => {
     fetchReviews();
@@ -102,8 +155,10 @@ const ProductDetail = ({ parsedProduct }: any) => {
     };
 
     let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItemIndex = existingCart.findIndex((item) => item.id === parsedProduct._id && item.color === selectedValue,);
-    console.log(existingItemIndex, " existingItemIndex")
+    const existingItemIndex = existingCart.findIndex(
+      (item) => item.id === parsedProduct._id && item.color === selectedValue,
+    );
+    console.log(existingItemIndex, ' existingItemIndex');
 
     if (existingItemIndex !== -1) {
       existingCart[existingItemIndex].count += count;
@@ -123,10 +178,10 @@ const ProductDetail = ({ parsedProduct }: any) => {
       label: 'Description',
       content: (
         <div className="p-2 flex flex-wrap md:flex-nowrap md:gap-10">
-          <div className="w-full md:w-4/6 border-r-2">
+          <div className="w-full md:w-4/6 md:border-r-2">
             <Para14 title={parsedProduct.description} />
           </div>
-          <ul className="list-disc w-full md:w-2/6">
+          <ul className="list-disc w-full md:w-2/6 mt-2 md:mt-0">
             {parsedProduct.spacification?.map((spec, index) => (
               <li key={index}>{spec.specsDetails}</li>
             ))}
@@ -151,9 +206,102 @@ const ProductDetail = ({ parsedProduct }: any) => {
       ),
     },
   ];
+  const cartRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+        setCartVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   return (
     <>
+{cartVisible && (
+        <div className="max-w-screen-xl mx-auto right-0 sm:right-5 top-14 mt-2 fixed z-50 hidden md:block" ref={cartRef}>
+          <div className="border sm:w-96  bg-white p-2">
+            <div className="flex items-center justify-between">
+              <p className="font-bold text-md-h6">SHOPPING CART</p>
+              <IoIosClose
+                className="cursor-pointer"
+                size={30}
+                onClick={() => setCartVisible(false)} // Close cart section
+              />
+            </div>
+            <div className="h-64 border overflow-y-scroll p-1 custom-scrollbar">
+              {cartProduct.map((product, index) => {
+                let filteredImage = product.imageUrl.find(
+                  (imageObject: any) => imageObject.colorCode === product.color
+                );
+                return (
+                  <div
+                    className="flex gap-2 mt-2 border-b-2 relative"
+                    key={index}
+                  >
+                    <div className="absolute top-2 right-2">
+                      <FaRegTrashAlt
+                        onClick={() => removeItemFromCart(index)}
+                        className="cursor-pointer"
+                      />
+                    </div>
+                    <Image
+                      className="rounded-md object-contain w-20 h-20"
+                      width={100}
+                      height={100}
+                      src={filteredImage?.imageUrl || ''}
+                      alt="image"
+                    />
+                    <div className="w-52">
+                      <Para12 title={product.name} />
+                      <p className="text-12">
+                        Color:
+                        <span
+                          className="h-3 w-3 rounded-full px-2 mx-2"
+                          style={{
+                            backgroundColor: `#${product.color}`,
+                          }}
+                        >
+                          {' '}
+                        </span>
+                      </p>
+                      <p className="text-12 font-bold">
+                        <span>{product.count}</span>X
+                      </p>
+                      <p className="text-12 font-bold">
+                        AED: <span>{product.price}</span>.00
+                      </p>
+                      <p className="text-12 font-bold absolute bottom-0 right-0">
+                        AED <span>{product.totalPrice}</span>.00
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className='text-end mt-2 mb-2'>
+        <p className='font-bold'>Total: AED <span>{subtotal}</span>.00</p>
+      </div>
+            <Para12 title={"*ALL ORDERS MAY TAKE UPTO 7 WORKING DAYS TO BE DELIVERED TO YOUR DOORSTEP"}/>
+            <div className="w-full mt-2 space-y-1">
+              <Link href="/cart" className="w-full block text-center bg-black text-white py-1">
+                View Cart
+              </Link>
+              <button
+                className="border w-full border-black hover:bg-black hover:text-white transition duration-300 py-1"
+                onClick={() => setCartVisible(false)} // Close cart section
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {!parsedProduct ? null : (
         <Container className="mt-10 md:mt-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-5">
