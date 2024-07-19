@@ -91,7 +91,13 @@ const CartTable: React.FC = () => {
 
   return (
     <>
-      {cartproduct.map((array: any, index: number) => (
+      {cartproduct.map((array: any, index: number) => {
+      let filteredImage = array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color)
+        
+        
+        console.log(filteredImage.imageUrl)
+        return (
+          
         <>
           <div
             className="p-2 rounded-md mt-5 bg-white shadow block md:hidden"
@@ -103,8 +109,8 @@ const CartTable: React.FC = () => {
                   width={100}
                   height={100}
                   className="rounded-md"
-                  src={array.imageUrl[0].imageUrl}
-                  alt="test"
+                  src={filteredImage.imageUrl && filteredImage.imageUrl}
+                  alt={array.name}
                 />
                 <div className="space-y-1">
                   <h1 className="text-14 font-semibold">{array.name}</h1>
@@ -150,7 +156,8 @@ const CartTable: React.FC = () => {
             </div>
           </div>
         </>
-      ))}
+        )
+})}
 
       {cartproduct.length > 0 ? (
         <div className="flex flex-col mt-10 md:mt-20">
@@ -183,16 +190,21 @@ const CartTable: React.FC = () => {
                   <tbody className="divide-y divide-gray-200">
                     {cartproduct.map((array: any, index: number) => {
                       let color: string;
+                      let filteredImage = array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color)
+        
+        
+                      console.log(filteredImage.imageUrl)
                       return (
                         <tr key={index}>
                           <td className="px-2 py-2 text-sm ">
                             <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
                               <Image
                                 className="rounded-md"
-                                src={array.imageUrl[0].imageUrl}
+                                src={filteredImage.imageUrl && filteredImage.imageUrl}
                                 width={100}
                                 height={100}
-                                alt="cart image"
+                                alt={array.name}
+
                               />
                               <div className="space-y-2">
                                 <Para14
@@ -258,17 +270,16 @@ const CartTable: React.FC = () => {
 
           <div className="text-end  border-t-2 mt-10 pt-5 space-y-2">
             <div className="flex gap-5 justify-end items-center">
-              <Para16 className="poppins-thin" title={'Subtotal'} />
+              <Para16 className="poppins-thin" title={'Sub Total :'} />
               <Para16
                 className="font-normal"
-                icon={'Dhs . '}
+                icon={'AED .'}
                 title={subtotal}
-                endicon=" AED"
               />
             </div>
             <p className="text-[12px]">
               Tax included.{' '}
-              <Link className="underline" href={'/policy'}>
+              <Link className="underline" href={'/shipping-policy'}>
                 Shipping
               </Link>{' '}
               calculated at checkout.

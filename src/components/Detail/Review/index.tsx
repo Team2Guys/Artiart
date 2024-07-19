@@ -91,9 +91,9 @@ const Review: React.FC = ({ reviews, productId, fetchReviews }: any) => {
             />
           </>
         ) : (
-          <>
-            There Is No Reviews Available
-          </>
+          <div className=' text-center mb-5'>
+            No Reviews Available
+          </div>
         )}
       </div>
       <div className="w-full md:w-2/6">

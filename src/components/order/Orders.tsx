@@ -127,7 +127,7 @@ function Orders() {
       render: (text: any, record: any) => {
         const Transaction = record.amount_cents
           ? (record.amount_cents / 100).toFixed(2)
-          : 'Amount Available';
+          : 'Amount not Available';
         return <span>{Transaction}</span>;
       },
     },
@@ -325,7 +325,7 @@ function Orders() {
 
           <Modal
             title="Product Details"
-            visible={isModalVisible}
+            open={isModalVisible}
             onCancel={handleCancel}
             footer={[
               <Button key="close" onClick={handleCancel}>
