@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
     <>
         
       <nav
-        className={` text-black border-t  sticky top-0  z-20 shadow-md  ${scrollingUp ? defaultStyle : scrolledStyle}`}
+        className={` text-black sticky top-0  z-20 shadow-md  bg-white`}
       >
         <Container>
           <div className=" flex py-4 pt-2 pb-2 lg:gap-20">
