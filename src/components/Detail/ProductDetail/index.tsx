@@ -33,7 +33,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
     if (products && JSON.parse(products).length > 0) {
       const cartItems = JSON.parse(products || '[]');
       setCartProduct(cartItems);
-  
+
       const sub = cartItems.reduce(
         (total: number, item: any) => total + item.totalPrice,
         0,
@@ -44,15 +44,15 @@ const ProductDetail = ({ parsedProduct }: any) => {
       setCartVisible(false);
     }
   };
-
   useEffect(() => {
-    fetchCartProducts();
-    const handleCartChange = () => fetchCartProducts();
-    window.addEventListener('cartChanged', handleCartChange);
-    return () => {
-      window.removeEventListener('cartChanged', handleCartChange);
-    };
-  }, []);
+    if (cartVisible) {
+      const timer = setTimeout(() => {
+        setCartVisible(false);
+      }, 8000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [cartVisible]);
 
   const removeItemFromCart = (index: number) => {
     Modal.confirm({
@@ -67,11 +67,10 @@ const ProductDetail = ({ parsedProduct }: any) => {
         setCartProduct(updatedCart);
         localStorage.setItem('cart', JSON.stringify(updatedCart));
         window.dispatchEvent(new Event('cartChanged'));
-        fetchCartProducts(); // Refresh cart visibility
+        fetchCartProducts();
       },
     });
   };
-
 
   useEffect(() => {
     fetchReviews();
@@ -171,6 +170,12 @@ const ProductDetail = ({ parsedProduct }: any) => {
     localStorage.setItem('cart', JSON.stringify(existingCart));
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event('cartChanged'));
+    fetchCartProducts();
+    const handleCartChange = () => fetchCartProducts();
+    window.addEventListener('cartChanged', handleCartChange);
+    return () => {
+      window.removeEventListener('cartChanged', handleCartChange);
+    };
   };
 
   const tabs = [
@@ -222,8 +227,11 @@ const ProductDetail = ({ parsedProduct }: any) => {
   }, []);
   return (
     <>
-{cartVisible && (
-        <div className="max-w-screen-xl mx-auto right-0 sm:right-5 top-14 mt-2 fixed z-50 hidden md:block" ref={cartRef}>
+      {cartVisible && (
+        <div
+          className="max-w-screen-xl mx-auto right-0 sm:right-5 top-14 mt-2 fixed z-50 hidden md:block"
+          ref={cartRef}
+        >
           <div className="border sm:w-96  bg-white p-2">
             <div className="flex items-center justify-between">
               <p className="font-bold text-md-h6">SHOPPING CART</p>
@@ -233,16 +241,13 @@ const ProductDetail = ({ parsedProduct }: any) => {
                 onClick={() => setCartVisible(false)} // Close cart section
               />
             </div>
-            <div className="h-64 border overflow-y-scroll p-1 custom-scrollbar">
+            <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
               {cartProduct.map((product, index) => {
                 let filteredImage = product.imageUrl.find(
-                  (imageObject: any) => imageObject.colorCode === product.color
+                  (imageObject: any) => imageObject.colorCode === product.color,
                 );
                 return (
-                  <div
-                    className="flex gap-2 mt-2 border-b-2 relative"
-                    key={index}
-                  >
+                  <div className="flex gap-2 mt-2  relative" key={index}>
                     <div className="absolute top-2 right-2">
                       <FaRegTrashAlt
                         onClick={() => removeItemFromCart(index)}
@@ -275,7 +280,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
                       <p className="text-12 font-bold">
                         AED: <span>{product.price}</span>.00
                       </p>
-                      <p className="text-12 font-bold absolute bottom-0 right-0">
+                      <p className="text-12 font-bold mt-5 absolute bottom-0 right-0">
                         AED <span>{product.totalPrice}</span>.00
                       </p>
                     </div>
@@ -283,12 +288,21 @@ const ProductDetail = ({ parsedProduct }: any) => {
                 );
               })}
             </div>
-            <div className='text-end mt-2 mb-2'>
-        <p className='font-bold'>Total: AED <span>{subtotal}</span>.00</p>
-      </div>
-            <Para12 title={"*ALL ORDERS MAY TAKE UPTO 7 WORKING DAYS TO BE DELIVERED TO YOUR DOORSTEP"}/>
+            <div className="text-end mt-2 mb-2">
+              <p className="font-bold">
+                Total: AED <span>{subtotal}</span>.00
+              </p>
+            </div>
+            <Para12
+              title={
+                '*ALL ORDERS MAY TAKE UPTO 7 WORKING DAYS TO BE DELIVERED TO YOUR DOORSTEP'
+              }
+            />
             <div className="w-full mt-2 space-y-1">
-              <Link href="/cart" className="w-full block text-center bg-black text-white py-1">
+              <Link
+                href="/cart"
+                className="w-full block text-center bg-black text-white py-1"
+              >
                 View Cart
               </Link>
               <button
