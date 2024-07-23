@@ -66,7 +66,7 @@ export default function Home() {
       <Navbar />
       <VideoMain />
       <CategorySlider categories={category} loading={loading} />
-      <Image className='w-full h-full mt-20' width={2400} height={1000} src={"/assets/images/banner-2.png"} alt='banner'/>
+      <Image className='w-full h-full mt-32' width={2400} height={1000} src={"/assets/images/banner-2.png"} alt='banner'/>
       <Product productItems={products} productsLoading={productsLoading} />
       <Footer />
     </>
