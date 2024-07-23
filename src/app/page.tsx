@@ -8,7 +8,7 @@ import VideoMain from 'components/Common/MainVideo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
-
+import banner from "../../public/assets/images/Banner.png"
 interface Category {
   id: number;
   name: string;
@@ -66,7 +66,7 @@ export default function Home() {
       <Navbar />
       <VideoMain />
       <CategorySlider categories={category} loading={loading} />
-      <Image className='w-full h-full mt-32' width={2400} height={1000} src={"/assets/images/banner-2.png"} alt='banner'/>
+      <Image className='w-full h-full mt-32' width={2400} height={1000} src={banner} alt='banner'/>
       <Product productItems={products} productsLoading={productsLoading} />
       <Footer />
     </>
