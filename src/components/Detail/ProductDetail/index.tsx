@@ -295,7 +295,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
             </div>
             <Para12
               title={
-                '*ALL ORDERS MAY TAKE UPTO 7 WORKING DAYS TO BE DELIVERED TO YOUR DOORSTEP'
+                '*ALL ORDERS MAY TAKE 48 HOURS TO BE DELIVERED TO YOUR DOORSTEP'
               }
             />
             <div className="w-full mt-2 space-y-1">
