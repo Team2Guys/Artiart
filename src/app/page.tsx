@@ -7,7 +7,9 @@ import Footer from 'components/layout/Footer';
 import VideoMain from 'components/Common/MainVideo';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import Image from 'next/image';
+import bannerimage from "../../public/assets/images/Banner-2.webp"
+import Link from 'next/link';
 interface Category {
   id: number;
   name: string;
@@ -65,6 +67,9 @@ export default function Home() {
       <Navbar />
       <VideoMain />
       <CategorySlider categories={category} loading={loading} />
+      <Link href={"https://artiart.ae/product/watermelon-seagull-suction-bottle"}>
+      <Image className='w-full h-full mt-32' width={2400} height={1000} src={bannerimage} alt='banner'/>
+      </Link>
       <Product productItems={products} productsLoading={productsLoading} />
       <Footer />
     </>
