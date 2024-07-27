@@ -340,13 +340,13 @@ const ProductDetail = ({ parsedProduct }: any) => {
               </p>
               {selectedStock === 0 ? (
                 <p>
-                  <span className="font-semibold text-lg">Out of Stock: </span>{' '}
-                  {selectedStock ?? '0'}{' '}
+                  <span className="font-semibold text-lg">Out of Stock</span>{' '}
+        
                 </p>
               ) : (
                 <p>
-                  <span className="font-semibold text-lg">In Stock: </span>{' '}
-                  {selectedStock ?? '0'}{' '}
+                  <span className="font-semibold text-lg">Availability: </span>{' '}
+                  {"In Stock"}
                 </p>
               )}
               <p className="font-semibold text-lg">Color </p>
