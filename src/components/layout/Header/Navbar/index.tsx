@@ -252,7 +252,7 @@ const Navbar: React.FC = () => {
         className=" fixed lg:bottom-10 bottom-20 right-10 z-50"
       >
         <Image
-          className="bg-white p-1 shadow-md rounded-full lg:w-14 w-9"
+          className="bg-white p-1 shadow-md rounded-full w-16 md:w-14 "
           src={whatsapp}
           alt="whatsapp"
         />
@@ -262,7 +262,7 @@ const Navbar: React.FC = () => {
         className=" fixed lg:bottom-10 bottom-20 left-10 z-50"
       >
         <Image
-          className="bg-white p-1 shadow-md rounded-full lg:w-14 w-9"
+          className="bg-white p-1 shadow-md rounded-full w-16 md:w-14 "
           src={call}
           alt="call"
         />
