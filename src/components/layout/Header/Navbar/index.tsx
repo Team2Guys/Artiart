@@ -249,7 +249,7 @@ const Navbar: React.FC = () => {
           'https://api.whatsapp.com/send/?phone=971588200549&text&type=phone_number&app_absent=0'
         }
         target="_blank"
-        className=" fixed lg:bottom-10 bottom-20 right-10 z-50"
+        className=" fixed md:bottom-10 bottom-4 right-4 md:right-10 z-50"
       >
         <Image
           className="bg-white p-1 shadow-md rounded-full w-16 md:w-14 "
@@ -259,7 +259,7 @@ const Navbar: React.FC = () => {
       </Link>
       <Link
         href={'tel:+971 58 820 0549'}
-        className=" fixed lg:bottom-10 bottom-20 left-10 z-50"
+        className=" fixed md:bottom-10 bottom-4 left-4 md:left-10 z-50"
       >
         <Image
           className="bg-white p-1 shadow-md rounded-full w-16 md:w-14 "
