@@ -86,9 +86,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productItems,productsLoading}
                       ) : null}
                     </div>
 
-                    <div className='flex gap-4 truncate'>{product.colors.map((item:any)=>{
+                    <div className='flex gap-4 truncate'>{product.colors && product.colors.map((item:any)=>{
                       return (
-                        <p className='rounded-full border-2' style={{width:"20px",  height: "20px", backgroundColor: `#${item.colorName}`,}}></p>
+                        <p key={item._id} className='rounded-full border-2' style={{width:"20px",  height: "20px", backgroundColor: `#${item.colorName}`,}}></p>
                       )
                     })}</div>
                   </div>
