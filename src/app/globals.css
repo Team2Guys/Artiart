@@ -223,6 +223,10 @@ input[type='radio']:checked + span {
 }
 .ant-layout .ant-layout-sider {
   background-color: white !important ;
+  min-width: 220px !important ;
+max-width: 220px !important;
+  width: 220px !important;
+
 }
 .ant-layout .ant-layout-sider-children {
   height: 100vh !important;
@@ -325,3 +329,9 @@ media-control-bar {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: black; /* Color when hovering over the scrollbar thumb */
 }
+
+
+/* .dashborad-table .ant-menu-light.ant-menu-inline .ant-menu-item{
+  border: 2px solid red !important;
+
+} */

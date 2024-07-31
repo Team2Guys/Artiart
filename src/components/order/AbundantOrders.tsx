@@ -57,34 +57,34 @@ function AbundantOrders() {
       },
     },
 
-    {
-      title: 'Amount ',
-      dataIndex: 'amount_cents',
-      key: 'amount_cents',
-      searchable: true,
-      render: (text: any, record: any) => {
-        let Transaction = record.amount_cents
-          ? (record.amount_cents / 100).toFixed(2)
-          : 'Amount Available';
+    // {
+    //   title: 'Amount ',
+    //   dataIndex: 'amount_cents',
+    //   key: 'amount_cents',
+    //   searchable: true,
+    //   render: (text: any, record: any) => {
+    //     let Transaction = record.amount_cents
+    //       ? (record.amount_cents / 100).toFixed(2)
+    //       : 'Amount Available';
 
-        const amountInDollars = (record.amount / 100).toFixed(2);
+    //     const amountInDollars = (record.amount / 100).toFixed(2);
 
-        return <span>{Transaction}</span>;
-      },
-    },
-    {
-      title: 'Transaction ID',
-      dataIndex: 'transactionId',
-      key: 'transactionId',
-      searchable: true,
-      render: (text: any, record: any) => {
-        let Transaction = record.transactionId
-          ? record.transactionId
-          : 'ID Not Available';
+    //     return <span>{Transaction}</span>;
+    //   },
+    // },
+    // {
+    //   title: 'Transaction ID',
+    //   dataIndex: 'transactionId',
+    //   key: 'transactionId',
+    //   searchable: true,
+    //   render: (text: any, record: any) => {
+    //     let Transaction = record.transactionId
+    //       ? record.transactionId
+    //       : 'ID Not Available';
 
-        return <span>{Transaction}</span>;
-      },
-    },
+    //     return <span>{Transaction}</span>;
+    //   },
+    // },
     {
       title: 'Creation Date',
       dataIndex: 'createdAt',

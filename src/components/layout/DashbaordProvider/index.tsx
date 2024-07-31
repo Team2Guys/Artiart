@@ -91,7 +91,7 @@ const DashboardProvider = ({ children }: any) => {
     {
       key: '5',
       icon: <FaEnvelopesBulk />,
-      label: 'Abundant orders',
+      label: 'Abandoned Checkouts',
       onClick: () => handleAddProductsClick('AbundentOrders'),
     },
   ];
@@ -169,16 +169,21 @@ const DashboardProvider = ({ children }: any) => {
     <Layout>
       <Sider
         trigger={null}
-        className={`w-full ${isVisible ? 'block' : 'hidden'}`}
+        className={`w-full ${isVisible ? 'block' : 'hidden'} max-w-[200px] border-1 `}
       >
         <div className="demo-logo-vertical" />
         <Logo className="flex justify-center mt-3 mb-3 " />
+        <div className='dashborad-table'>
         <Menu
           mode="inline"
+          className='dashborad-table'
           defaultSelectedKeys={['1']}
           items={menuArray.map((item) => item)}
         />
+
+        </div>
       </Sider>
+
       <Layout>
         <Header style={{ padding: 0, background: 'white' }}>
           <Button
@@ -192,6 +197,7 @@ const DashboardProvider = ({ children }: any) => {
             }}
           />
         </Header>
+
         <Content
           className="lg:my-[24px] lg:mx-[16px] lg:p-[24px] md:my-[24px] md:mx-[16px] md:p-[24px] p-6"
           style={{

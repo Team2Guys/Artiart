@@ -11,6 +11,7 @@ interface ProductItem {
   price: number;
   discountPrice?: number;
   _id?: any;
+  colors?:any
 }
 
 interface ProductCardProps {
@@ -18,10 +19,12 @@ interface ProductCardProps {
   productsLoading: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  productItems,
-  productsLoading,
-}) => {
+
+
+const ProductCard: React.FC<ProductCardProps> = ({ productItems,productsLoading}) => {
+
+  console.log(productItems, "productItems")
+
   return (
     <>
       {productsLoading ? (
@@ -82,6 +85,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
                         </del>
                       ) : null}
                     </div>
+
+                    <div className='flex gap-4 truncate'>{product.colors.map((item:any)=>{
+                      return (
+                        <p className='rounded-full border-2' style={{width:"20px",  height: "20px", backgroundColor: `#${item.colorName}`,}}></p>
+                      )
+                    })}</div>
                   </div>
                 </Link>
               </div>
