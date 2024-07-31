@@ -14,7 +14,7 @@ const Product = ({ productItems, productsLoading, HeadingName }: PROPS) => {
   const router = useRouter();
 
   return (
-    <Container className="mt-10 md:mt-32 ">
+    <Container className="mt-5 md:mt-32 ">
       <h1 className="xl:text-xl-h5 lg:text-lg-h5 text-md-h5 font-semibold text-center md:text-start gap-3">
         {HeadingName ? HeadingName : 'Featured Products'}
       </h1>

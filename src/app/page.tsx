@@ -68,7 +68,7 @@ export default function Home() {
       <VideoMain />
       <CategorySlider categories={category} loading={loading} />
       <Link href={"https://artiart.ae/product/watermelon-seagull-suction-bottle"}>
-      <Image className='w-full h-full mt-32' width={2400} height={1000} src={bannerimage} alt='banner'/>
+      <Image className='w-full h-full mt-5 md:mt-32' width={2400} height={1000} src={bannerimage} alt='banner'/>
       </Link>
       <Product productItems={products} productsLoading={productsLoading} />
       <Footer />
