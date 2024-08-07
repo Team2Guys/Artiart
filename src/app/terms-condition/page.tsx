@@ -58,7 +58,7 @@ const Terms = () => {
           <HeadingH6
             className="font-semibold"
             title={
-              '2)	By using our website(www.artiart.ae) and services, you accept these terms: '
+              '2)	By using our website (www.artiart.ae) and services, you accept these terms: '
             }
           />
           <p>

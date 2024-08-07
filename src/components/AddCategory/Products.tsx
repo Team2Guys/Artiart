@@ -20,11 +20,7 @@ interface editCategoryNameType {
   name: string;
 }
 
-const AddProductForm = ({
-  setselecteMenu,
-  seteditCategory,
-  editCategory,
-}: any) => {
+const AddProductForm = ({setselecteMenu,seteditCategory,editCategory}: any) => {
   const [category, setCategory] = useState<any[]>();
   let CategoryName =
     editCategory && editCategory.name ? { name: editCategory.name } : null;

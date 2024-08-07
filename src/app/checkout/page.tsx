@@ -76,6 +76,7 @@ const Checkout = () => {
 
 
   const parseSubtotal = subtotal;
+  
   const [billingData, setBillingData] = useState({
     first_name: '',
     last_name: '',

@@ -9,7 +9,12 @@ html,
 body {
   font-family: 'Poppins', sans-serif !important;
 }
-/* font family  */
+@layer base {
+  ul, li {
+    list-style: disc;
+  }
+}
+
 
 .poppins-thin {
   font-family: 'Poppins', sans-serif;
