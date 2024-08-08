@@ -39,7 +39,6 @@ let shipmentCharges:shipment[]=[
               'The standard delivery period within the UAE is 1-2 business days from the date of placing the order.Avail free delivery with the following minimum order values:'
             }
           />
-          <Para14 title={`SHIPPING CHARGES OUTSIDE UAE:`} />
           <ul className='flex flex-col gap-1 list-disc '>
        
             {shipmentCharges.map((item:shipment, index: number)=>{
