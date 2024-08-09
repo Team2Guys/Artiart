@@ -163,9 +163,11 @@ console.log(selectedStock, "selectedStock"
     const existingItemIndex = existingCart.findIndex(
       (item) => item.id === parsedProduct._id && item.color === selectedValue,
     );
-    console.log(existingItemIndex, ' existingItemIndex');
 
     if (existingItemIndex !== -1) {
+      console.log()
+      if(  existingCart[existingItemIndex].count >= existingCart[existingItemIndex].StockCount.quantity) return null
+
       existingCart[existingItemIndex].count += count;
       existingCart[existingItemIndex].totalPrice =
         existingCart[existingItemIndex].count * parsedProduct.price;
@@ -177,7 +179,7 @@ console.log(selectedStock, "selectedStock"
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event('cartChanged'));
     fetchCartProducts();
-    
+
     const handleCartChange = () => fetchCartProducts();
     window.addEventListener('cartChanged', handleCartChange);
     return () => {
