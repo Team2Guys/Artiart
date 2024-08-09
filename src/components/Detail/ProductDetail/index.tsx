@@ -114,11 +114,10 @@ console.log(selectedStock, "selectedStock"
   const handleChange = (e) => {
     const newValue = e.target.value;
     setSelectedValue(newValue);
-    const stock = parsedProduct.variantStockQuantities?.find((v) => v.variant === newValue)
-        ?.quantity || 0;
+    const stock = parsedProduct.variantStockQuantities?.find((v) => v.variant === newValue)?.quantity || 0;
     setSelectedStock(stock);
     if(stock > count ) return null 
-    setCount(stock < 0 || stock ==0 ?  1: stock)
+    setCount(stock <= 0  ?  1: 1)
   };
 
   const increment = () => {
@@ -126,12 +125,11 @@ console.log(selectedStock, "selectedStock"
     setCount((prevCount) =>
       prevCount < selectedStock ? prevCount + 1 : prevCount,
     );
-    // window.dispatchEvent(new Event('cartChanged'));
+  
   };
 
   const decrement = () => {
     setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : prevCount));
-    // window.dispatchEvent(new Event('cartChanged'));
   };
 
 
@@ -382,7 +380,7 @@ console.log(selectedStock, "selectedStock"
                     return (
                       <p
                         key={index}
-                        className={`w-[45px] h-[40px] rounded-lg focus:outline-none whitespace-nowrap hover:bg-blue-100 cursor-pointer ${selectedValue === button.colorName
+                        className={` relative w-[45px] h-[40px] rounded-lg focus:outline-none whitespace-nowrap hover:bg-blue-100 cursor-pointer ${selectedValue === button.colorName
                             ? `bg-blue-100 border-2 border-blue-500`
                             : `bg-${button.colorName}-500  ${button.colorName.toLowerCase() == 'black' || button.colorName.toLowerCase() == '#000' ? 'text-white' : 'text-black'} border border-${button.colorName}-600`
                           }`}
@@ -395,6 +393,8 @@ console.log(selectedStock, "selectedStock"
                           VariantProduct && (VariantProduct.quantity > 0 ? null :
 
                             <RxCross2 className='text-red-600 w-full h-full' />
+                           
+                            
 
                           )
                         }
