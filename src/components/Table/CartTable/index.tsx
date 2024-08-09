@@ -9,11 +9,17 @@ import Button from 'components/Common/Button';
 import { Modal } from 'antd';
 import { useRouter } from 'next/navigation';
 import { CgLayoutGrid } from 'react-icons/cg';
+import { number } from 'yup';
+import { count } from 'console';
+import { stockInterface } from 'types';
 
 const CartTable: React.FC = () => {
   const [cartproduct, setCartProduct] = useState<any[]>([]);
   const [counts, setCounts] = useState<number[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
+  const [inputValue, setinputValue] = useState<number>(0);
+  const [stock, setStock] = useState<stockInterface[]>([])
+
   const [changeId, setchangeId] = useState<any>();
   const router = useRouter();
   const ProductHandler = () => {
@@ -25,6 +31,8 @@ const CartTable: React.FC = () => {
       console.log(cartItems, 'cartItems');
 
       setCounts(cartItems.map((item: any) => item.count));
+      setStock(cartItems.map((item: any) => item.StockCount));
+
       const sub = cartItems.reduce(
         (total: number, item: any) => total + item.totalPrice,
         0,
@@ -33,22 +41,53 @@ const CartTable: React.FC = () => {
     }
   };
 
+
+
+
   useEffect(() => {
     ProductHandler();
   }, [changeId]);
 
   const increment = (index: number) => {
+    const Stocks = [...stock]
+    
     const newCounts = [...counts];
+    if (newCounts[index] >= Stocks[index].quantity) return
     newCounts[index] += 1;
+    
+    setinputValue((prev)=>prev+1)
     setCounts(newCounts);
     updateTotalPrice(index, newCounts[index]);
     window.dispatchEvent(new Event('cartChanged'));
   };
 
+
+  const handleOnChange = (index:number, e : React.ChangeEvent<HTMLInputElement>)=>{
+    const Value = Number(e.target.value)
+    console.log(Value, "value")
+if(Value < 0 || Value ==0) return 
+const Stocks = [...stock]
+    
+const newCounts = [...counts];
+if (Value > Stocks[index].quantity) return
+
+    newCounts[index] = Value;
+    console.log(newCounts[index] , " index")
+   
+    setCounts(newCounts);
+    updateTotalPrice(index, newCounts[index]);
+    window.dispatchEvent(new Event('cartChanged'));
+
+
+  }
+  
+
   const decrement = (index: number) => {
     if (counts[index] > 1) {
       const newCounts = [...counts];
       newCounts[index] -= 1;
+    setinputValue((prev)=>prev-=1)
+
       setCounts(newCounts);
       updateTotalPrice(index, newCounts[index]);
       window.dispatchEvent(new Event('cartChanged'));
@@ -89,13 +128,15 @@ const CartTable: React.FC = () => {
     });
   };
 
+const initivalueCount=(value: number)=>{
+  setinputValue(value)
+}
+
   return (
     <>
       {cartproduct.map((array: any, index: number) => {
       let filteredImage = array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color)
-        
-        
-        console.log(filteredImage.imageUrl)
+      
         return (
           
         <>
@@ -120,18 +161,27 @@ const CartTable: React.FC = () => {
                   <h2 className="text-12 font-medium">
                     Color <span>{array.color}</span>
                   </h2>
-                  <div className="flex gap-2 items-center">
-                    <div className="border-2 p-2 flex justify-center items-center gap-1 w-20">
+                  <div className="flex gap-4 items-center">
+                    <div className="border-2 p-2 flex justify-center items-center gap-1 w-24">
                       <FiMinus
                         className="cursor-pointer"
                         size={20}
                         onClick={() => decrement(index)}
                       />
-                      <input
+                      {/* <input
                         className="w-5 hover:border hover:scale-105 text-center"
                         type="text"
+                        value={counts[index] + inputValue }
+                        onChange={(e)=>handleOnChange(index,e)}
+                        
+                      /> */}
+
+<input
+                        className="w-5 hover:border hover:scale-105 text-center numberInput"
+                        type='number'
                         value={counts[index]}
-                        readOnly
+                        onChange={(e)=>handleOnChange(index,e)}
+                        
                       />
                       <FiPlus
                         className="cursor-pointer"
@@ -192,7 +242,7 @@ const CartTable: React.FC = () => {
                       let color: string;
                       let filteredImage = array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color)
         
-        
+        console.log(index, "index")
                       console.log(filteredImage.imageUrl)
                       return (
                         <tr key={index}>
@@ -228,19 +278,23 @@ const CartTable: React.FC = () => {
                             </div>
                           </td>
                           <td className="px-2  text-sm ">
-                            <div className="flex gap-2 items-center">
-                              <div className="border-2 p-2 flex justify-center items-center gap-1 w-20">
+                            <div className="flex gap- items-center">
+                              <div className="border-2 p-2 flex justify-center items-center gap-2 w-24">
                                 <FiMinus
                                   className="cursor-pointer"
                                   size={20}
                                   onClick={() => decrement(index)}
                                 />
-                                <input
-                                  className="w-5 hover:border hover:scale-105 text-center"
-                                  type="text"
-                                  value={counts[index]}
-                                  readOnly
-                                />
+              
+
+<input
+                        className="w-5 hover:border hover:scale-105 text-center numberInput"
+                        type='number'
+                        value={counts[index]}
+                        onChange={(e)=>handleOnChange(index,e)}
+                        
+                      />
+
                                 <FiPlus
                                   className="cursor-pointer"
                                   size={20}

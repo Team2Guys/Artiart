@@ -7,26 +7,30 @@ import React from 'react';
 
 
 const Policy = () => {
-interface shipment {
-  state: string,
-  instruction: string
+  interface shipment {
+    state: string,
+    instruction: string
 
-}
+  }
 
-let shipmentCharges:shipment[]=[ 
-  
-  {state: "Dubai",
-  instruction: "Free delivery for orders above AED 150 "
-}  ,
-{state: "Sharjah",
-  instruction: "Free delivery for orders above AED 200 "
-}  ,
-{state: "Abu Dhabi",
-  instruction: "Free delivery for orders above AED 200"
-}  ,
-{state: "Other Emirates",
-  instruction: "Free delivery for orders above AED 250 "
-}  ,]
+  let shipmentCharges: shipment[] = [
+
+    {
+      state: "Dubai",
+      instruction: "Free delivery for orders above AED 150 "
+    },
+    {
+      state: "Sharjah",
+      instruction: "Free delivery for orders above AED 200 "
+    },
+    {
+      state: "Abu Dhabi",
+      instruction: "Free delivery for orders above AED 200"
+    },
+    {
+      state: "Other Emirates",
+      instruction: "Free delivery for orders above AED 250 "
+    },]
 
   return (
     <>
@@ -40,14 +44,14 @@ let shipmentCharges:shipment[]=[
             }
           />
           <ul className='flex flex-col gap-1 list-disc '>
-       
-            {shipmentCharges.map((item:shipment, index: number)=>{
-              return(
-              <li key={index} className='text-14'> <span className=' font-bold text-bold'>{item.state}: </span>
-              <span>{item.instruction}</span>
 
-              
-              </li>  
+            {shipmentCharges.map((item: shipment, index: number) => {
+              return (
+                <li key={index} className='text-14'> <span className=' font-bold text-bold'>{item.state}: </span>
+                  <span>{item.instruction}</span>
+
+
+                </li>
 
               )
             })}
@@ -56,10 +60,7 @@ let shipmentCharges:shipment[]=[
 
 
           <Para14 title={'CASH ON DELIVERY INSIDE UAE:AVAILABLE '} />
-          <HeadingH5
-            className="underline"
-            title={'*SHIPPING WITHIN UAE IS FREE*'}
-          />
+  
           {/* <Para14
             title={
               'For countries ourtside of the UAE, the delivery will be made within 7-10 business days. '

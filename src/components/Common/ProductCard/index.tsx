@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Loader from 'components/Loader/Loader';
 import { generateSlug } from 'Data/data';
+import { RxCross2 } from 'react-icons/rx';
 interface ProductItem {
   imageUrl: { imageUrl: string; public_id: string }[];
   hoverImageUrl: { imageUrl: string; public_id: string };
@@ -12,6 +13,9 @@ interface ProductItem {
   discountPrice?: number;
   _id?: any;
   colors?:any
+variantStockQuantities?: {variant: string,quantity: number,_id: string }[]
+
+
 }
 
 interface ProductCardProps {
@@ -86,9 +90,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ productItems,productsLoading}
                       ) : null}
                     </div>
 
-                    <div className='flex gap-4 truncate'>{product.colors && product.colors.map((item:any)=>{
+                    <div className='flex gap-4 truncate relative'>{product.colors && product.colors.map((item:any)=>{
+let VariantProduct = product.variantStockQuantities && product.variantStockQuantities.find( (variantItem) => variantItem.variant ==item.colorName )
+console.log(VariantProduct, " VariantProduct")
+
                       return (
-                        <p key={item._id} className='rounded-full border-2' style={{width:"20px",  height: "20px", backgroundColor: `#${item.colorName}`,}}></p>
+                      
+                      <>
+                      <div key={item._id} className='rounded-full border-2' style={{width:"20px",  height: "20px", backgroundColor: `#${item.colorName}`,}}>
+
+                     {VariantProduct && (VariantProduct.quantity > 0 ? null : <RxCross2 className='text-red-600 w-full h-full' />) }                     
+                      </div>
+                      
+                      </>
                       )
                     })}</div>
                   </div>

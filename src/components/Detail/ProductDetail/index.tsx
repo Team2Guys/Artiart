@@ -19,6 +19,8 @@ import { IoIosClose } from 'react-icons/io';
 import Image from 'next/image';
 import cartimage from '../../../../public/assets/images/art/art3.png';
 import { FaRegTrashAlt } from 'react-icons/fa';
+import { RxCross2 } from 'react-icons/rx';
+import { number } from 'yup';
 
 const ProductDetail = ({ parsedProduct }: any) => {
   const [count, setCount] = useState(1);
@@ -79,8 +81,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${parsedProduct._id}`,
-      );
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/getReviews/${parsedProduct._id}`,);
       setReviews(response.data.reviews);
     } catch (err) {
       console.error(err.message);
@@ -89,26 +90,19 @@ const ProductDetail = ({ parsedProduct }: any) => {
 
   const findColorWithStock = () => {
     const colorWithStock = parsedProduct.colors.find((color) => {
-      const stock =
-        parsedProduct.variantStockQuantities?.find(
-          (v) => v.variant === color.colorName,
+      const stock =parsedProduct.variantStockQuantities?.find((v) => v.variant === color.colorName,
         )?.quantity || 0;
       return stock > 0;
     });
     return colorWithStock ? colorWithStock.colorName : null;
   };
 
-  const initialSelectedValue =
-    parsedProduct && parsedProduct.colors && parsedProduct.colors.length > 0
-      ? findColorWithStock()
+  const initialSelectedValue = parsedProduct && parsedProduct.colors && parsedProduct.colors.length > 0? findColorWithStock()
       : null;
   const [selectedValue, setSelectedValue] = useState(initialSelectedValue);
-  const [selectedStock, setSelectedStock] = useState(
-    parsedProduct.variantStockQuantities?.find(
-      (v) => v.variant === initialSelectedValue,
-    )?.quantity || 0,
-  );
-
+  const [selectedStock, setSelectedStock] = useState(parsedProduct.variantStockQuantities?.find(      (v) => v.variant === initialSelectedValue,)?.quantity || 0);
+console.log(selectedStock, "selectedStock"
+)
   useEffect(() => {
     const initialStock =
       parsedProduct.variantStockQuantities?.find(
@@ -120,24 +114,35 @@ const ProductDetail = ({ parsedProduct }: any) => {
   const handleChange = (e) => {
     const newValue = e.target.value;
     setSelectedValue(newValue);
-    const stock =
-      parsedProduct.variantStockQuantities?.find((v) => v.variant === newValue)
+    const stock = parsedProduct.variantStockQuantities?.find((v) => v.variant === newValue)
         ?.quantity || 0;
     setSelectedStock(stock);
+    if(stock > count ) return null 
+    setCount(stock < 0 || stock ==0 ?  1: stock)
   };
 
   const increment = () => {
+
     setCount((prevCount) =>
       prevCount < selectedStock ? prevCount + 1 : prevCount,
     );
-    window.dispatchEvent(new Event('cartChanged'));
+    // window.dispatchEvent(new Event('cartChanged'));
   };
 
   const decrement = () => {
     setCount((prevCount) => (prevCount > 1 ? prevCount - 1 : prevCount));
-    window.dispatchEvent(new Event('cartChanged'));
+    // window.dispatchEvent(new Event('cartChanged'));
   };
 
+
+  const countChangeHandler = (e: MouseEvent<HTMLInputElement>) => {
+    let value = Number(e.target.value)
+    if (value < 0 || value == 0) return
+
+    value <= selectedStock ?  setCount(value):null
+ 
+
+  };
   const handleAddToCart = () => {
     if (!selectedValue || !parsedProduct) {
       return;
@@ -151,6 +156,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
       color: selectedValue,
       count: count,
       totalPrice: parsedProduct.price * count,
+      StockCount: parsedProduct.variantStockQuantities.find((item:any)=>item.variant ===selectedValue)
     };
 
     let existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -171,6 +177,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
     message.success('Product added to cart successfully!');
     window.dispatchEvent(new Event('cartChanged'));
     fetchCartProducts();
+    
     const handleCartChange = () => fetchCartProducts();
     window.addEventListener('cartChanged', handleCartChange);
     return () => {
@@ -355,7 +362,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
               {selectedStock === 0 ? (
                 <p>
                   <span className="font-semibold text-lg">Out of Stock</span>{' '}
-        
+
                 </p>
               ) : (
                 <p>
@@ -366,20 +373,30 @@ const ProductDetail = ({ parsedProduct }: any) => {
               <p className="font-semibold text-lg">Color </p>
               <div className="flex gap-2 mb-4 flex-wrap w-full">
                 {parsedProduct.colors &&
+
                   parsedProduct.colors.map((button, index) => {
+                    let VariantProduct = parsedProduct.variantStockQuantities && parsedProduct.variantStockQuantities.find((variantItem) => variantItem.variant == button.colorName)
+
                     return (
                       <p
                         key={index}
-                        className={`py-2 px-4 w-[45px] h-[40px] rounded-lg focus:outline-none whitespace-nowrap hover:bg-blue-100 cursor-pointer ${
-                          selectedValue === button.colorName
+                        className={`w-[45px] h-[40px] rounded-lg focus:outline-none whitespace-nowrap hover:bg-blue-100 cursor-pointer ${selectedValue === button.colorName
                             ? `bg-blue-100 border-2 border-blue-500`
                             : `bg-${button.colorName}-500  ${button.colorName.toLowerCase() == 'black' || button.colorName.toLowerCase() == '#000' ? 'text-white' : 'text-black'} border border-${button.colorName}-600`
-                        }`}
+                          }`}
                         style={{ backgroundColor: `#${button.colorName}` }}
                         onClick={() =>
                           handleChange({ target: { value: button.colorName } })
                         }
-                      />
+                      >
+                        {
+                          VariantProduct && (VariantProduct.quantity > 0 ? null :
+
+                            <RxCross2 className='text-red-600 w-full h-full' />
+
+                          )
+                        }
+                      </p>
                     );
                   })}
               </div>
@@ -439,9 +456,9 @@ const ProductDetail = ({ parsedProduct }: any) => {
                     />
                     <input
                       className="w-14 text-center hover:border hover:scale-105"
-                      type="text"
+                      type="number"
                       value={count}
-                      readOnly
+                      onChange={(e) => countChangeHandler(e)}
                     />
                     <FiPlus
                       className="cursor-pointer"

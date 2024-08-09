@@ -5,6 +5,8 @@ export interface PRODUCTCARDPROPS {
   price: string;
 }
 
+export interface stockInterface { variant: string; quantity: number }
+
 export interface Product {
   name: string;
   description: string;
@@ -12,8 +14,8 @@ export interface Product {
   category: string;
   colors: { colorName: string }[];
   totalStockQuantity: number;
-  variantStockQuantities: { variant: string; quantity: number }[];
-  modelDetails: { name: string; detail: string }[];
+  variantStockQuantities: [];
+  modelDetails: stockInterface[];
   spacification: { specsDetails: string }[];
   discountPrice: string;
   category: string;
