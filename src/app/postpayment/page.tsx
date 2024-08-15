@@ -31,6 +31,7 @@ export interface PaymentQueryParams {
 const PostPayhnalder = () => {
     const searchParams = useSearchParams()
     const [isExploding, setIsExploding] = useState(false);
+    
 
 
     const id = searchParams.get('id')
@@ -43,6 +44,8 @@ const PostPayhnalder = () => {
     const order_id = searchParams.get('order')
     const pending = searchParams.get('pending')
     const is_3d_secure = searchParams.get('is_3d_secure')
+
+    let successFlag= success && success.toLowerCase()==="true"
 
 
     let paymentObject = {
@@ -67,9 +70,11 @@ const PostPayhnalder = () => {
             if (!id || !success || !amount_cents || !integration_id || !currency || !order_id || !pending || !is_3d_secure || !created_at) {
                 throw new Error('Missing required fields in request body')
             }
-            if(success) localStorage.removeItem('cart')
+            if(successFlag){
+              localStorage.removeItem('cart')
+            } 
             const response = await axios.post(
-                `${[process.env.NEXT_PUBLIC_BASE_URL]}/api/payment/postPayhnalder`, payementDetails,);
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/postPayhnalder`, payementDetails,);
             console.log(response, "response")
         } catch (error) {
             console.log(error, "err")
@@ -84,16 +89,23 @@ const PostPayhnalder = () => {
 
     }, [])
 
-
+console.log(typeof(success), "success type")
 
 
     return (
 
       <>
-     <Confetti />
+{ 
+successFlag ? <Confetti /> : null
+
+}
+
         <div>
    <div className="flex items-center justify-center h-screen">
-  <div className="p-1 rounded shadow-lg bg-gradient-to-r from-purple-500 via-green-500 to-blue-500">
+
+{ successFlag ? 
+
+<div className="p-1 rounded shadow-lg bg-gradient-to-r from-purple-500 via-green-500 to-blue-500">
     <div className="flex flex-col items-center p-4 space-y-2 bg-white">
       <svg xmlns="http://www.w3.org/2000/svg" className="text-green-600 w-28 h-28" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -111,7 +123,12 @@ const PostPayhnalder = () => {
         </span>
       </Link>
     </div>
-  </div>
+  </div> : <div>payement not Successsfull ! Please Try again</div>
+    
+    
+    }
+
+
 </div>
 
         </div>
