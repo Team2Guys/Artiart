@@ -113,16 +113,17 @@ const AddProductForm = ({
       if (!upDated) return null;
       const response = await axios.post(url, upDated);
       console.log(response, 'response');
-      Toaster(
-        'success',
-        updateFlag
-          ? 'Product has been sucessufully Updated !'
-          : 'Product has been sucessufully Created !',
-      );
+
+     
+        Toaster('success',updateFlag? 'Product has been sucessufully Updated !': 'Product has been sucessufully Created !',);
+      
       setProductInitialValue(null);
       if (updateFlag) {
-        setEditProduct(undefined);
-        // setselecteMenu("Add All Products");
+        setTimeout(() => {
+          setEditProduct(undefined);
+          setselecteMenu("Add All Products");
+    
+        }, 1000);
       }
       resetForm();
       setloading(false);
