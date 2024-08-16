@@ -1,6 +1,7 @@
 'use client'
 import axios from 'axios';
 import Confetti from 'components/confetti/Confetti';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react';
@@ -123,7 +124,23 @@ successFlag ? <Confetti /> : null
         </span>
       </Link>
     </div>
-  </div> : <div>payement not Successsfull ! Please Try again</div>
+  </div> : <div> 
+      
+ <div className="flex justify-center">
+  <div className="w-full max-w-md">
+    <div className="border-b-4 border-red-500 shadow-lg p-12 text-center flex flex-col items-center">
+  <Image className='flex justify-center' src='/assets/images/remove.png' alt='remove image' height={50} width={50}/>
+      <h2 className="text-4xl font-bold mt-2 mb-3">Payment Unsuccessful</h2>
+      <p className="text-lg text-gray-700 font-medium"> Your payment was not completed. Please try again or contact our support team for assistance.</p>
+    </div>
+  </div>
+</div>
+
+
+
+  
+  
+  </div>
     
     
     }
