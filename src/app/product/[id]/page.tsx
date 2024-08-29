@@ -15,7 +15,6 @@ const Detail = ({ params }: { params: { id: string } }) => {
   const [products, setProducts] = useState([]);
   const [productDetail, setproductDetail] = useState(null);
   const [productsLoading, setProductsloading] = useState<boolean>(false);
-  console.log(parsedProduct, 'parsedProduct');
 
   useEffect(() => {
     const fetchData = async () => {

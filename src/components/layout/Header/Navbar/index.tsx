@@ -246,7 +246,7 @@ const Navbar: React.FC = () => {
       </nav>
       <Link
         href={
-          'https://api.whatsapp.com/send/?phone=971588200549&text&type=phone_number&app_absent=0'
+          'https://api.whatsapp.com/send?phone=971563946500'
         }
         target="_blank"
         className=" fixed md:bottom-10 bottom-4 right-4 md:right-10 z-50"
