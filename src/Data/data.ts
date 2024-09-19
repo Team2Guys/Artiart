@@ -149,9 +149,9 @@ Script:{
     {
       "@context": "https://schema.org/", 
       "@type": "Product", 
-      "name": "IDEA CAFE SUCTION BOTTLE",
-      "image": "https://artiart.ae/_next/image?url=http%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1715267694%2F2guysProducts%2Fhvj2d03rzrysvjn2oglh.jpg&w=3840&q=75",
-      "description": "Shop the  spill-proof coffee cup! Our 340ml travel mug features patented technology to keep drinks hot or cold on-the-go.",
+      "name": "IDEA CAFE SUCTION BOTTLE - Dubai Edition",
+      "image": "https://artiart.ae/_next/image?url=http%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1723730929%2F2guysProducts%2Fzue63wt32tdhm8vamwfi.png&w=3840&q=75",
+      "description": "Experience the best Dubai Edition Artiart coffee cup! Shop our innovative 340ml spill-proof suction bottle, featuring Idea Café Travel patented technology.",
       "brand": {
         "@type": "Brand",
         "name": "ArtiArt"
@@ -161,7 +161,7 @@ Script:{
         "ratingValue": "5",
         "bestRating": "5",
         "worstRating": "4",
-        "ratingCount": "20"
+        "ratingCount": "25"
       }
     }
   },
@@ -174,9 +174,9 @@ Script:{
     {
       "@context": "https://schema.org/", 
       "@type": "Product", 
-      "name": "IDEA CAFE SUCTION BOTTLE",
-      "image": "https://artiart.ae/_next/image?url=http%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1715267694%2F2guysProducts%2Fhvj2d03rzrysvjn2oglh.jpg&w=3840&q=75",
-      "description": "Shop the  spill-proof coffee cup! Our 340ml travel mug features patented technology to keep drinks hot or cold on-the-go.",
+      "name": "IDEA CAFE SUCTION BOTTLE - Abu Dhabi Edition",
+      "image": "https://artiart.ae/_next/image?url=http%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1723804826%2F2guysProducts%2Fnc1gkdxg534v0iisbso6.jpg&w=3840&q=75",
+      "description": "Experience the best Abu Dhabi Edition Artiart coffee cup! Shop our innovative 340ml spill-proof suction bottle, featuring Idea Café Travel patented technology.",
       "brand": {
         "@type": "Brand",
         "name": "ArtiArt"
@@ -186,7 +186,7 @@ Script:{
         "ratingValue": "5",
         "bestRating": "5",
         "worstRating": "4",
-        "ratingCount": "20"
+        "ratingCount": "15"
       }
     }
   },
