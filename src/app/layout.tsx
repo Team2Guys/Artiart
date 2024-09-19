@@ -26,6 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
         <head>
+        <link rel="icon" href="/favicon.ico" />
           <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
 
 
