@@ -25,11 +25,12 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
-        <Head>
+        <head>
           <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
 
 
           <Script
+            id="facebook-pixel"
             dangerouslySetInnerHTML={{
               __html: `
                 !function(f,b,e,v,n,t,s)
@@ -49,6 +50,7 @@ export default function RootLayout({
 
 
           <Script
+            id="clarity"
             dangerouslySetInnerHTML={{
               __html: `
               (function(c,l,a,r,i,t,y){
@@ -59,22 +61,7 @@ export default function RootLayout({
             `,
             }}
           />
-
-
-          <noscript>
-            <img
-              height="1"
-              width="1"
-              style={{ display: 'none' }}
-              src="https://www.facebook.com/tr?id=734868487823383&ev=PageView&noscript=1"
-            />
-          </noscript>
-
-          {/* End Meta Pixel Code */}
-        </Head>
-
-
-        <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
+      <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
             {JSON.stringify({
               "@context": "https://schema.org/",
               "@type": "Product",
@@ -138,7 +125,22 @@ export default function RootLayout({
               }
             })}
           </Script>
-          
+
+
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src="https://www.facebook.com/tr?id=734868487823383&ev=PageView&noscript=1"
+            />
+          </noscript>
+
+          {/* End Meta Pixel Code */}
+        </head>
+
+
+  
         <body className={inter.className}>
           <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
           <Suspense>
