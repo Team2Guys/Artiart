@@ -142,8 +142,7 @@ Script:{
   {
     name: "idea-cafe-suction-bottle-dubai-edition",
     metaTitle: "Spill-Proof suction bottle, Idea Cafe Travel cup | ArtiArt",
-    metaDescription: "Experience the best Dubai Edition Artiart coffee cup! Shop our innovative 340ml spill-proof suction bottle, featuring Idea Café Travel's patented technology."
-    ,
+    metaDescription: "Experience the best Dubai Edition Artiart coffee cup! Shop our innovative 340ml spill-proof suction bottle, featuring Idea Café Travel's patented technology.",
     Script:
     {
       "@context": "https://schema.org/", 

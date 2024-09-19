@@ -60,22 +60,10 @@ const PRODUCT = async ({ id }:{ id: string }) => {
 
 
 
-  let SEOPRODUCT = SEO_products.find((item) => item.name.toLowerCase() === parsedProduct?.toLowerCase())
-//   metadata.title = SEOPRODUCT?.metaTitle
-//   metadata.description = SEOPRODUCT?.metaDescription
-
-
-
 
 
   return (
     <>
-
-      <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
-        {JSON.stringify(
-          SEOPRODUCT?.Script)}
-      </Script>
-
       <Navbar />
       {productDetail && !productsLoading ? (
         <>
