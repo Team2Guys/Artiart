@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Providers } from '../Providers';
 import React, { Suspense } from 'react';
 import Head from 'next/head';
+import Script from 'next/script'
+
 import { GoogleTagManager } from '@next/third-parties/google';
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,9 +25,11 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
-        <head>
+        <Head>
           <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
-          <script
+
+
+          <Script
             dangerouslySetInnerHTML={{
               __html: `
                 !function(f,b,e,v,n,t,s)
@@ -41,7 +45,10 @@ export default function RootLayout({
               `,
             }}
           />
-          <script
+
+
+
+          <Script
             dangerouslySetInnerHTML={{
               __html: `
               (function(c,l,a,r,i,t,y){
@@ -53,6 +60,79 @@ export default function RootLayout({
             }}
           />
 
+          <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
+            {JSON.stringify({
+              "@context": "https://schema.org/",
+              "@type": "Product",
+              "name": "ICEBERG SMALL – SUCTION CUP",
+              "image": "https://artiart.ae/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1717486823%2F2guysProducts%2Fxpigeoh6xm5njvwk6kcu.jpg&w=3840&q=75",
+              "description": "Buy ARTIART Unbreakable Tritan Transparent Plastic Iceberg No Fall Party Mug, Small (280 ml) online on artiart.ae at best prices",
+              "brand": {
+                "@type": "Brand",
+                "name": "ArtiArt"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "4",
+                "ratingCount": "15"
+              }
+            })}
+          </Script>
+          
+
+          <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
+            {JSON.stringify({
+              "@context": "https://schema.org/",
+              "@type": "Product",
+              "name": "ICEBERG BIG SUCTION CUP",
+              "image": "https://artiart.ae/_next/image?url=http%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1715267046%2F2guysProducts%2Fw1qyngaybzswhdxot6cv.jpg&w=3840&q=75",
+              "description": "Buy ARTIART Unbreakable Tritan Transparent Plastic Iceberg No Fall Party Mug, Big (430 ml)online on artiart.ae at best prices.",
+              "brand": {
+                "@type": "Brand",
+                "name": "ArtiArt"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "4",
+                "ratingCount": "22"
+              }
+            })}
+          </Script>
+
+
+          <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
+            {JSON.stringify({
+              "@context": "https://schema.org/",
+              "@type": "Product",
+              "name": "IDEA CAFE SUCTION BOTTLE",
+              "image": "https://artiart.ae/_next/image?url=http%3A%2F%2Fres.cloudinary.com%2Fdz7nqwiev%2Fimage%2Fupload%2Fv1715267694%2F2guysProducts%2Fhvj2d03rzrysvjn2oglh.jpg&w=3840&q=75",
+              "description": "Shop the  spill-proof coffee cup! Our 340ml travel mug features patented technology to keep drinks hot or cold on-the-go.",
+              "brand": {
+                "@type": "Brand",
+                "name": "ArtiArt"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "bestRating": "5",
+                "worstRating": "4",
+                "ratingCount": "20"
+              }
+            })}
+          </Script>
+
+
+
+
+
+
+
+
+
           <noscript>
             <img
               height="1"
@@ -63,7 +143,7 @@ export default function RootLayout({
           </noscript>
 
           {/* End Meta Pixel Code */}
-        </head>
+        </Head>
         <body className={inter.className}>
           <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
           <Suspense>
