@@ -60,7 +60,21 @@ export default function RootLayout({
             }}
           />
 
-          <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
+
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: 'none' }}
+              src="https://www.facebook.com/tr?id=734868487823383&ev=PageView&noscript=1"
+            />
+          </noscript>
+
+          {/* End Meta Pixel Code */}
+        </Head>
+
+
+        <Script type="application/ld+json" id="product-json-ld" strategy="afterInteractive">
             {JSON.stringify({
               "@context": "https://schema.org/",
               "@type": "Product",
@@ -124,26 +138,7 @@ export default function RootLayout({
               }
             })}
           </Script>
-
-
-
-
-
-
-
-
-
-          <noscript>
-            <img
-              height="1"
-              width="1"
-              style={{ display: 'none' }}
-              src="https://www.facebook.com/tr?id=734868487823383&ev=PageView&noscript=1"
-            />
-          </noscript>
-
-          {/* End Meta Pixel Code */}
-        </Head>
+          
         <body className={inter.className}>
           <GoogleTagManager gtmId="GTM-TPTTH6Q7" />
           <Suspense>
