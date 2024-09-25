@@ -135,7 +135,8 @@ const initivalueCount=(value: number)=>{
   return (
     <>
       {cartproduct.map((array: any, index: number) => {
-      let filteredImage = array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color)
+          console.log(array.imageUrl, "")
+      let filteredImage = (array.imageUrl &&array.imageUrl.length > 0) ? array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color) : " "
       
         return (
           
@@ -238,12 +239,10 @@ const initivalueCount=(value: number)=>{
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {cartproduct.map((array: any, index: number) => {
+                    {(cartproduct && cartproduct.length > 0) && cartproduct.map((array: any, index: number) => {
                       let color: string;
                       let filteredImage = array.imageUrl.find((imageObject:any)=>imageObject.colorCode ==array.color)
         
-        console.log(index, "index")
-                      console.log(filteredImage.imageUrl)
                       return (
                         <tr key={index}>
                           <td className="px-2 py-2 text-sm ">

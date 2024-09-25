@@ -4,7 +4,12 @@ import { Para14 } from 'components/Common/Paragraph';
 import Footer from 'components/layout/Footer';
 import Navbar from 'components/layout/Header/Navbar';
 import React from 'react';
-
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: `Our Story - ARTIART's Journey in Crafting High-Quality Products`,
+  description: `ARTIART's commitment to quality and innovation has earned global recognition, including the prestigious IF DESIGN AWARD 2020.`,
+}
 const AboutUs = () => {
   return (
     <>

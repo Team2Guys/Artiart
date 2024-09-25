@@ -3,7 +3,16 @@ import { HeadingH2, HeadingH3, HeadingH5 } from 'components/Common/Heading';
 import { Para14 } from 'components/Common/Paragraph';
 import Footer from 'components/layout/Footer';
 import Navbar from 'components/layout/Header/Navbar';
+
 import React from 'react';
+import type { Metadata } from 'next'
+
+
+ 
+export const metadata: Metadata = {
+  title: 'Shipping Policy & Estimated Delivery Times | ARTIART',
+  description: `ARTIART's shipping policy ensures timely delivery. Review our delivery details for UAE and international orders.`,
+}
 
 
 const Policy = () => {
@@ -12,6 +21,8 @@ const Policy = () => {
     instruction: string
 
   }
+
+  
 
   let shipmentCharges: shipment[] = [
 
@@ -31,6 +42,8 @@ const Policy = () => {
       state: "Other Emirates",
       instruction: "Free delivery for orders above AED 250 "
     },]
+
+
 
   return (
     <>

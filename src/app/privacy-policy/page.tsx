@@ -11,6 +11,17 @@ import Navbar from 'components/layout/Header/Navbar';
 import Link from 'next/link';
 import React from 'react';
 
+
+import type { Metadata } from 'next'
+
+
+ 
+export const metadata: Metadata = {
+  title: 'Your Privacy Rights  |ARTIART Policy',
+  description: `ARTIART's Privacy Policy explains how we collect, use, and protect your personal data. Learn about our commitment to data security and your rights.
+`,
+}
+
 const Privacy = () => {
   return (
     <>

@@ -1,40 +1,20 @@
-'use client';
+import Corporate from "./Corporate";
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: `get in touch for corporate orders | Artiart`,
+  description: `ARTIART offers customized corporate solutions for businesses. Contact us for bulk orders, product customization, and exceptional service.`,
+}
 
-import Container from 'components/Common/Container';
-import { HeadingH2 } from 'components/Common/Heading';
-import { Para14 } from 'components/Common/Paragraph';
-import Footer from 'components/layout/Footer';
-import Navbar from 'components/layout/Header/Navbar';
-import Link from 'next/link';
-import React from 'react';
 
-const Corporate = () => {
+
+const Page = () => {
   return (
     <>
-      <Navbar />
-      <Container className="mt-10 md:mt-20">
-        <div className="max-w-screen-md mx-auto space-y-5 ">
-          <HeadingH2 className="" title={'Customized Corporate Orders'} />
-          <Para14
-            title={
-              'Grow your brand awareness with custom bottles with your company brand!'
-            }
-          />
-          <Para14
-            title={
-              <>
-                Contact us on{' '}
-                <Link className="underline" href={'mailto:b2b@artiart.ae'}>
-                  b2b@artiart.ae.
-                </Link>{' '}
-              </>
-            }
-          />
-        </div>
-      </Container>
-      <Footer />
+      <Corporate />
+      
     </>
   );
 };
 
-export default Corporate;
+export default Page;

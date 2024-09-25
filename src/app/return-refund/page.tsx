@@ -6,6 +6,16 @@ import Navbar from 'components/layout/Header/Navbar';
 import Link from 'next/link';
 import React from 'react';
 
+import type { Metadata } from 'next'
+
+
+ 
+export const metadata: Metadata = {
+  title: 'Return, Refund, and Exchange Policy | ARTIART',
+  description: `ARTIART offers easy returns and refunds. Review our policy for details on eligibility, return shipping, and refund processing.`,
+}
+
+
 const Return = () => {
   return (
     <>

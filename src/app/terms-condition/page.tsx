@@ -5,6 +5,16 @@ import Footer from 'components/layout/Footer';
 import Navbar from 'components/layout/Header/Navbar';
 import Link from 'next/link';
 import React from 'react';
+import type { Metadata } from 'next'
+
+
+ 
+export const metadata: Metadata = {
+  title: 'ARTIART Terms & Conditions - Official Policy',
+  description: `Learn about ARTIART's policies and procedures, ensuring a secure and enjoyable user experience.
+`,
+}
+
 
 const Terms = () => {
   return (

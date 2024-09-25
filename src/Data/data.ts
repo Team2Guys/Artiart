@@ -717,3 +717,44 @@ Script:{
   }
 
 ];
+
+
+
+export const Categories_MetaData = [
+  {
+    "Category": "suction-bottles",
+    "URL": "https://artiart.ae/products/suction-bottles",
+    "Meta Title": "Durable Suction Water Bottles - Insulated & Anti-Spill | Artiart",
+    "Meta Description": "Artiart offers insulated sports water bottles with suction technology, combining durability and style. Leak-proof and perfect for daily commutes."
+  },
+  {
+    "Category": "suction-mugs",
+    "URL": "https://artiart.ae/products/suction-mugs",
+    "Meta Title": "Suction Coffee Mugs for Travel, Office & Daily Use | Artiart",
+    "Meta Description": "Keep your coffee hot or cold for hours with Artiart's insulated suction mugs. Ideal for travel, work, and daily commutes."
+  },
+  {
+    "Category": "insulated-suction-flasks",
+    "URL": "https://artiart.ae/products/insulated-suction-flasks",
+    "Meta Title": "Insulated Suction Flasks - Spill-Proof & Leak-Proof | Artiart",
+    "Meta Description": "Artiart's insulated suction flasks combine thermal insulation with spill-proof technology. Perfect for coffee, tea, or cold beverages."
+  },
+  {
+    "Category": "party-glasses",
+    "URL": "https://artiart.ae/products/party-glasses",
+    "Meta Title": "Party Glasses - Drinking Glasses with Suction Bottom | Artiart",
+    "Meta Description": "From birthdays to holidays, make every moment count! Artiart's durable drinking glasses with suction button technology keep the party going."
+  },
+  {
+    "Category": "suction-coffee-cups",
+    "URL": "https://artiart.ae/products/suction-coffee-cups",
+    "Meta Title": "Coffee Suction Cups - Spill-Proof, Suction Coffee Cups | Artiart",
+    "Meta Description": "Artiart's coffee suction cups are designed for coffee lovers. These are Spill-proof, durable, and good for sports and travellers."
+  },
+  {
+    "Category": "tea-pots",
+    "URL": "https://artiart.ae/products/tea-pots",
+    "Meta Title": "Hot Water Flask & Tea Pots | Artiart's Tea Essentials",
+    "Meta Description": "Share laughter, share tea. Artiart's hot water and tea flask for special moments with loved ones."
+  }
+]
