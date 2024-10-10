@@ -28,7 +28,7 @@ const ProductDetail = ({ parsedProduct }: any) => {
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [cartProduct, setCartProduct] = useState<any[]>([]);
   const [subtotal, setSubtotal] = useState<number>(0);
-  const [cartVisible, setCartVisible] = useState(false); // New state for cart visibility
+  const [cartVisible, setCartVisible] = useState(false); 
 
   const fetchCartProducts = () => {
     const products = localStorage.getItem('cart');
