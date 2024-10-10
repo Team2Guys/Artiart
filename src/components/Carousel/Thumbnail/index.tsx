@@ -185,7 +185,7 @@ const Thumbnail = ({ Images, selectedColor }: any) => {
                 src={array?.imageUrl}
                 width={1440}
                 height={768}
-                alt="images"
+                alt={array?.altText || ""}
               />
             </div>
           ))}
@@ -197,9 +197,10 @@ const Thumbnail = ({ Images, selectedColor }: any) => {
               <Image
                 className="w-full object-contain md:h-28"
                 src={array?.imageUrl}
+                alt={array?.altText || ""}
                 width={150}
                 height={150}
-                alt="images"
+      
               />
             </div>
           ))}

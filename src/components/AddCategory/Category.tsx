@@ -35,7 +35,7 @@ function Category({
       render: (text: any, record: any) => (
         <Image
           src={record.posterImageUrl.imageUrl}
-          alt={`Image of ${record.name}`}
+          alt={record.posterImageUrl?.altText ? record.posterImageUrl.altText : ""}
           width={50}
           height={50}
         />

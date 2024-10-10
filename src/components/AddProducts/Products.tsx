@@ -114,15 +114,15 @@ const AddProductForm = ({
       const response = await axios.post(url, upDated);
       console.log(response, 'response');
 
-     
-        Toaster('success',updateFlag? 'Product has been sucessufully Updated !': 'Product has been sucessufully Created !',);
-      
+
+      Toaster('success', updateFlag ? 'Product has been sucessufully Updated !' : 'Product has been sucessufully Created !',);
+
       setProductInitialValue(null);
       if (updateFlag) {
         setTimeout(() => {
           setEditProduct(undefined);
           setselecteMenu("Add All Products");
-    
+
         }, 1000);
       }
       resetForm();
@@ -225,11 +225,32 @@ const AddProductForm = ({
   };
 
   const handleColorCodeChange = (index: number, newColorCode: string) => {
-    const updatedImagesUrl = imagesUrl.map((item, i) =>
-      i === index ? { ...item, colorCode: newColorCode } : item,
-    );
+    const updatedImagesUrl = imagesUrl.map((item, i) => i === index ? { ...item, colorCode: newColorCode } : item,);
     setImagesUrl(updatedImagesUrl);
   };
+
+  const handleAltText = (index: number, text: string) => {
+    const updatedImagesUrl = imagesUrl.map((item, i) => i === index ? { ...item, altText: text } : item,);
+    setImagesUrl(updatedImagesUrl);
+  };
+  const handleAltText_posterImage = (index: number, text: string) => {
+    if(!posterimageUrl) return 
+    const updatedImagesUrl = posterimageUrl.map((item, i) => i === index ? { ...item, altText: text } : item,);
+    setposterimageUrl(updatedImagesUrl);
+  };
+
+
+
+  const handleAltText_hover = (index: number, text: string) => {
+    if(!hoverImage) return 
+    const updatedImagesUrl = hoverImage.map((item, i) => i === index ? { ...item, altText: text } : item,);
+    sethoverImage(updatedImagesUrl);
+  };
+
+
+
+console.log(posterimageUrl, "posterimageUrl")
+
 
   return (
     <>
@@ -286,15 +307,15 @@ const AddProductForm = ({
                       </option>
                       {category && category.length > 0
                         ? category.map((item: any, index) => (
-                            <option
-                              value={item._id}
-                              label={item.name}
-                              key={index}
-                              className="text-gray-900"
-                            >
-                              {item.name}
-                            </option>
-                          ))
+                          <option
+                            value={item._id}
+                            label={item.name}
+                            key={index}
+                            className="text-gray-900"
+                          >
+                            {item.name}
+                          </option>
+                        ))
                         : null}
                     </Field>
                     <ErrorMessage
@@ -611,6 +632,19 @@ const AddProductForm = ({
                           src={item.imageUrl}
                           alt={`productImage-${index}`}
                         />
+
+<input
+                            type="text"
+                            placeholder="Add Alt Text"
+                            className="border-2 p-1 focus:outline-none w-full"
+                            value={item.altText}
+                            required
+                            onChange={(e) =>
+                              handleAltText_posterImage(index, e.target.value)
+                            }
+                          />
+
+
                       </div>
                     );
                   })}
@@ -649,6 +683,17 @@ const AddProductForm = ({
                           }
                           alt={`productImage-${index}`}
                         />
+
+<input
+                            type="text"
+                            placeholder="Add Alt Text"
+                            className="border-2 p-1 focus:outline-none w-full"
+                            value={item.altText}
+                            required
+                            onChange={(e) =>
+                              handleAltText_hover(index, e.target.value)
+                            }
+                          />
                       </div>
                     );
                   })}
@@ -668,13 +713,13 @@ const AddProductForm = ({
             </div>
 
             {imagesUrl && imagesUrl.length > 0 ? (
-              <div className="flex flex-wrap mb-3 ">
+              <div className="flex flex-wrap mb-3 gap-1">
                 {imagesUrl.map((item: any, index) => {
                   return (
                     <>
-                      <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-2">
                         <div
-                          className="group border border-gray-300 rounded-md overflow-hidden m-1 relative"
+                          className="group border border-gray-300 rounded-md overflow-hidden m-1 relative w-fit"
                           key={index}
                         >
                           <div className="absolute top-1 right-1 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -687,23 +732,41 @@ const AddProductForm = ({
                           </div>
 
                           <Image
-                            className="cursor-pointer"
+                            className="cursor-pointer bg-contain w-full"
                             width={100}
                             height={100}
                             src={item.imageUrl}
                             alt={`productImage-${index}`}
                           />
                         </div>
-                        <input
-                          type="text"
-                          placeholder="Add color code"
-                          className="border borde-2 focus:outline-none w-full"
-                          value={item.colorCode}
-                          required
-                          onChange={(e) =>
-                            handleColorCodeChange(index, e.target.value)
-                          }
-                        />
+
+                        <div className='flex gap-2 flex-col'>
+
+                          <input
+                            type="text"
+                            placeholder="Add color code"
+                            className="border p-1 focus:outline-none w-full"
+                            value={item.colorCode}
+                            required
+                            onChange={(e) =>
+                              handleColorCodeChange(index, e.target.value)
+                            }
+                          />
+                          <input
+                            type="text"
+                            placeholder="Add Alt Text"
+                            className="border-2 p-1 focus:outline-none w-full"
+                            value={item.altText}
+                            required
+                            onChange={(e) =>
+                              handleAltText(index, e.target.value)
+                            }
+                          />
+
+                        </div>
+
+
+
                       </div>
                     </>
                   );

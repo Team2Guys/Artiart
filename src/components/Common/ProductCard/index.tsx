@@ -6,8 +6,8 @@ import { generateSlug } from 'Data/data';
 import { RxCross2 } from 'react-icons/rx';
 interface ProductItem {
   imageUrl: { imageUrl: string; public_id: string }[];
-  hoverImageUrl: { imageUrl: string; public_id: string };
-  posterImageUrl: { imageUrl: string; public_id: string };
+  hoverImageUrl: { imageUrl: string; public_id: string; altText?:string };
+  posterImageUrl: { imageUrl: string; public_id: string; altText?:string };
   name: string;
   price: number;
   discountPrice?: number;
@@ -55,7 +55,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ productItems, productsLoading
                         width={500}
                         height={500}
                         className="h-20 md:h-80 w-full object-contain rounded-t-xl"
-                        alt="image"
+                
+                        alt={product.posterImageUrl.altText || ""}
                       />
                     )}
                     {product.hoverImageUrl && (

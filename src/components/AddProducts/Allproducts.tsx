@@ -142,9 +142,8 @@ const Category: React.FC<CategoryProps> = ({
       key: 'action',
       render: (text: any, record: Product) => (
         <RiDeleteBin6Line
-          className={`${canDeleteProduct ? 'text-red-500 cursor-pointer' : ''} ${
-            !canDeleteProduct ? 'cursor-not-allowed text-gray-400' : ''
-          }`}
+          className={`${canDeleteProduct ? 'text-red-500 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-gray-400' : ''
+            }`}
           size={20}
           onClick={() => {
             if (canDeleteProduct) {
@@ -174,11 +173,9 @@ const Category: React.FC<CategoryProps> = ({
             />
             <div>
               <p
-                className={`${
-                  canAddProduct && 'cursor-pointer'
-                } p-2 ${canAddProduct && 'hover:bg-gray-200'} flex justify-center ${
-                  !canAddProduct && 'cursor-not-allowed text-gray-400'
-                }`}
+                className={`${canAddProduct && 'cursor-pointer'
+                  } p-2 ${canAddProduct && 'hover:bg-gray-200'} flex justify-center ${!canAddProduct && 'cursor-not-allowed text-gray-400'
+                  }`}
                 onClick={() => {
                   if (canAddProduct) {
                     setselecteMenu('Add Products');

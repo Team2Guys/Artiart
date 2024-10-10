@@ -250,9 +250,7 @@ console.log(selectedStock, "selectedStock"
             </div>
             <div className="max-h-52 border border-slate-100 overflow-y-scroll p-1 custom-scrollbar">
               {cartProduct.map((product, index) => {
-                let filteredImage = product.imageUrl.find(
-                  (imageObject: any) => imageObject.colorCode === product.color,
-                );
+                let filteredImage = product.imageUrl.find((imageObject: any) => imageObject.colorCode === product.color,);
                 return (
                   <div className="flex gap-2 mt-2  relative" key={index}>
                     <div className="absolute top-2 right-2">
@@ -266,7 +264,7 @@ console.log(selectedStock, "selectedStock"
                       width={100}
                       height={100}
                       src={filteredImage?.imageUrl || ''}
-                      alt="image"
+                      alt={filteredImage?.altText || ''}
                     />
                     <div className="w-52">
                       <Para12 title={product.name} />
