@@ -11,6 +11,8 @@ export const withoutVariation = [
   { name: 'totalStockQuantity', type: 'number' },
 ];
 
+
+
 export const Variation = [
   { name: 'variant', type: 'text' },
   { name: 'quantity', type: 'number' },
