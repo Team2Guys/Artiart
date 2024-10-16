@@ -68,8 +68,6 @@ export const generateSlug = (text: string) => {
     .replace(/\-\-+/g, '-');
 };
 
-
-
 export const SEO_products = [
   {
     name: "iceberg-small-suction-cup",
