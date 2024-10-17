@@ -34,8 +34,6 @@ export async function generateMetadata({ params }: Props,
   return {
     title: SEOPRODUCT?.metaTitle,
     description: SEOPRODUCT?.metaDescription,
-  
- 
   }
 }
  
