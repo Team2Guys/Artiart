@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Product from 'components/Home/Product';
 import Loader from 'components/Loader/Loader';
-import { generateSlug, SEO_products } from 'Data/data';
+import { generateSlug} from 'Data/data';
 
 import Script from 'next/script'
 
