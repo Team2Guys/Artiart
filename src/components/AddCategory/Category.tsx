@@ -14,6 +14,7 @@ function Category({
   canAddCategory,
   canDeleteCategory,
   seteditCategory,
+  canEditCategory
 }: any) {
   const handleDelete = async (key: any) => {
     try {
@@ -78,11 +79,16 @@ function Category({
       key: 'Edit',
       render: (text: any, record: any) => (
         <LiaEdit
-          className={'cursor-pointer'}
+        className={`cursor-pointer ${canEditCategory && 'text-red-500'} ${
+          !canEditCategory && 'cursor-not-allowed text-gray-400'
+        }`}
           size={20}
           onClick={() => {
-            seteditCategory(record);
-            setselecteMenu('CategoryForm');
+            if(canEditCategory){
+              seteditCategory(record);
+              setselecteMenu('CategoryForm');
+
+            }
           }}
         />
       ),

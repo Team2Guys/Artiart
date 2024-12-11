@@ -175,7 +175,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
                   canEditProduct: e.target.checked,
                 }))
               }
-              id="canDeleteProduct"
+              id="canEditProduct"
             />
 
 
