@@ -165,6 +165,9 @@ const DashboardProvider = ({ children }: any) => {
     };
   }, []);
 
+
+  console.log(loggedInUser, "loggedInUser")
+
   return (
     <Layout>
       <Sider

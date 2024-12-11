@@ -90,6 +90,14 @@ function Admins({ setselecteMenu }: any) {
       ),
     },
     {
+      title: 'Can Edit Product',
+      dataIndex: 'canEditProduct',
+      key: 'canAddProduct',
+      render: (text: any, record: any) => (
+        <span>{record.canEditProduct ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
       title: 'Can Delete Product',
       dataIndex: 'canDeleteProduct',
       key: 'canDeleteProduct',
@@ -97,12 +105,21 @@ function Admins({ setselecteMenu }: any) {
         <span>{record.canDeleteProduct ? 'Yes' : 'No'}</span>
       ),
     },
+
     {
       title: 'Can Add Category',
       dataIndex: 'canAddCategory',
       key: 'canAddCategory',
       render: (text: any, record: any) => (
         <span>{record.canAddCategory ? 'Yes' : 'No'}</span>
+      ),
+    },
+    {
+      title: 'Can Edit Category',
+      dataIndex: 'canEditCategory',
+      key: 'canEditCategory',
+      render: (text: any, record: any) => (
+        <span>{record.canEditCategory ? 'Yes' : 'No'}</span>
       ),
     },
     {

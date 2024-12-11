@@ -25,8 +25,11 @@ const AddAdmin = ({ setselecteMenu }: any) => {
     password: '',
     canAddProduct: false,
     canDeleteProduct: false,
+    canEditProduct:false,
     canAddCategory: false,
     canDeleteCategory: false,
+    canEditCategory:false,
+
   });
 
   // Function to handle input changes
@@ -74,8 +77,10 @@ const AddAdmin = ({ setselecteMenu }: any) => {
           password: '',
           canAddProduct: false,
           canDeleteProduct: false,
+          canEditProduct:false,
           canAddCategory: false,
           canDeleteCategory: false,
+          canEditCategory:false,
         });
       }
     } catch (err: any) {
@@ -154,8 +159,31 @@ const AddAdmin = ({ setselecteMenu }: any) => {
             />
           </div>
 
+
           <div className="flex items-center justify-between w-[250px]">
-            <label htmlFor="canDeleteProduct">Can Delete Category</label>
+            <label htmlFor="canDeleteProduct">Can Edit Product</label>
+
+      
+
+<Input
+              type="checkbox"
+              name="canEditProduct"
+              checked={formData.canEditProduct}
+              onChange={(e: any) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  canEditProduct: e.target.checked,
+                }))
+              }
+              id="canDeleteProduct"
+            />
+
+
+
+          </div>
+
+          <div className="flex items-center justify-between w-[250px]">
+            <label htmlFor="canDeleteProduct">Can Delete Product</label>
 
             <Input
               type="checkbox"
@@ -169,6 +197,8 @@ const AddAdmin = ({ setselecteMenu }: any) => {
               }
               id="canDeleteProduct"
             />
+
+
           </div>
 
           <div className="flex items-center justify-between w-[250px]">
@@ -185,6 +215,23 @@ const AddAdmin = ({ setselecteMenu }: any) => {
                 }))
               }
               id="canAddCategory"
+            />
+          </div>
+
+          <div className="flex items-center justify-between w-[250px]">
+            <label htmlFor="canEditCategory">Can Edit Category</label>
+
+            <Input
+              type="checkbox"
+              name="canEditCategory"
+              checked={formData.canEditCategory}
+              onChange={(e: any) =>
+                setFormData((prevData) => ({
+                  ...prevData,
+                  canEditCategory: e.target.checked,
+                }))
+              }
+              id="canEditCategory"
             />
           </div>
 
