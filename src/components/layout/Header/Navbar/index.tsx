@@ -31,7 +31,6 @@ const Navbar: React.FC = () => {
   const [subtotal, setSubtotal] = useState<number>(0);
   const [cartVisible, setCartVisible] = useState(false); // New state for cart visibility
 
-
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -99,10 +98,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-        
-      <nav
-        className={` text-black sticky top-0  z-20 shadow-md  bg-white`}
-      >
+      <nav className={` text-black sticky top-0  z-20 shadow-md  bg-white`}>
         <Container>
           <div className=" flex py-4 pt-2 pb-2 lg:gap-20">
             <div className="relative z-10">
@@ -245,9 +241,7 @@ const Navbar: React.FC = () => {
         </Container>
       </nav>
       <Link
-        href={
-          'https://api.whatsapp.com/send?phone=971563946500'
-        }
+        href={`https://api.whatsapp.com/send?phone=${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
         target="_blank"
         className=" fixed md:bottom-10 bottom-4 right-4 md:right-10 z-50"
       >
@@ -258,7 +252,7 @@ const Navbar: React.FC = () => {
         />
       </Link>
       <Link
-        href={'tel:+971 58 820 0549'}
+        href={`tel:+${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
         className=" fixed md:bottom-10 bottom-4 left-4 md:left-10 z-50"
       >
         <Image
