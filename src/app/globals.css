@@ -10,11 +10,11 @@ body {
   font-family: 'Poppins', sans-serif !important;
 }
 @layer base {
-  ul, li {
+  ul,
+  li {
     list-style: disc;
   }
 }
-
 
 .poppins-thin {
   font-family: 'Poppins', sans-serif;
@@ -229,9 +229,8 @@ input[type='radio']:checked + span {
 .ant-layout .ant-layout-sider {
   background-color: white !important ;
   min-width: 220px !important ;
-max-width: 220px !important;
+  max-width: 220px !important;
   width: 220px !important;
-
 }
 .ant-layout .ant-layout-sider-children {
   height: 100vh !important;
@@ -307,7 +306,7 @@ media-control-bar {
   border-color: black;
 }
 
-.reviewstar.ant-rate{
+.reviewstar.ant-rate {
   font-size: 15px !important;
 }
 .custom-scrollbar {
@@ -335,26 +334,22 @@ media-control-bar {
   background: black; /* Color when hovering over the scrollbar thumb */
 }
 
-
 /* .dashborad-table .ant-menu-light.ant-menu-inline .ant-menu-item{
   border: 2px solid red !important;
 
 } */
 
-
-
-.numberInput:hover svg{
+.numberInput:hover svg {
   display: none !important;
 }
 
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; 
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-.numberInput input[type=number] {
-    -moz-appearance:textfield; 
+.numberInput input[type='number'] {
+  -moz-appearance: textfield;
 }

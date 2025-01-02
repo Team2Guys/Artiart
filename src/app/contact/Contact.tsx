@@ -13,8 +13,7 @@ import { useForm, ValidationError } from '@formspree/react';
 import emailjs from 'emailjs-com';
 import Link from 'next/link';
 import axios from 'axios';
-
-
+import { formatPhoneNumber } from 'config';
 
 export const Contact = () => {
   const formRef = useRef(null);
@@ -35,7 +34,6 @@ export const Contact = () => {
     }));
   };
 
-  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const form = e.target; // Access the form element
@@ -86,7 +84,13 @@ export const Contact = () => {
                     Call Support:
                   </th>
                   <td className="font-bold pt-3 poppins-thin text-start w-3/6 lg:text-16 text-14">
-                    <Link href={'tel:+971 58 820 0549'}>+971 58 820 0549</Link>
+                    <Link
+                      href={`tel:${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}
+                    >
+                      {formatPhoneNumber(
+                        process.env.NEXT_PUBLIC_CONTACT_NUMBER as string,
+                      )}
+                    </Link>
                   </td>
                 </tr>
 
@@ -96,11 +100,11 @@ export const Contact = () => {
                   </th>
                   <td className="font-bold pt-3 poppins-thin text-start">
                     <Link
-                      href={
-                        'https://api.whatsapp.com/send/?phone=971588200549&text&type=phone_number&app_absent=0'
-                      }
+                      href={`https://api.whatsapp.com/send/?phone=${process.env.NEXT_PUBLIC_CONTACT_NUMBER}&text&type=phone_number&app_absent=0`}
                     >
-                      +971 58 820 0549
+                      {formatPhoneNumber(
+                        process.env.NEXT_PUBLIC_CONTACT_NUMBER as string,
+                      )}
                     </Link>
                   </td>
                 </tr>
@@ -247,5 +251,3 @@ export const Contact = () => {
     </>
   );
 };
-
-
