@@ -165,6 +165,9 @@ const DashboardProvider = ({ children }: any) => {
     };
   }, []);
 
+
+  console.log(loggedInUser, "loggedInUser")
+
   return (
     <Layout>
       <Sider
@@ -237,6 +240,9 @@ const DashboardProvider = ({ children }: any) => {
               loading={loading}
               canAddCategory={loggedInUser && loggedInUser.canAddCategory}
               canDeleteCategory={loggedInUser && loggedInUser.canDeleteCategory}
+              canEditCategory={loggedInUser && loggedInUser.canEditCategory}
+
+
               seteditCategory={setEditCategory}
             />
           ) : selectedMenu === 'Add All Products' ? (
@@ -247,6 +253,8 @@ const DashboardProvider = ({ children }: any) => {
               loading={productLoading}
               canAddProduct={loggedInUser && loggedInUser.canAddProduct}
               canDeleteProduct={loggedInUser && loggedInUser.canDeleteProduct}
+              canEditProduct={loggedInUser && loggedInUser.canEditProduct}
+
               setEditProduct={setEditProduct}
             />
           ) : selectedMenu === 'SEO_FORM' ? (

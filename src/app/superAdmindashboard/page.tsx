@@ -13,9 +13,7 @@ import ProtectedRoute from 'hooks/AuthHookSuperAdmin';
 
 const DashboardLogin = () => {
   const router = useRouter();
-  const [selecteMenu, setselecteMenu] = useState<string | null | undefined>(
-    'AllAdmins',
-  );
+  const [selecteMenu, setselecteMenu] = useState<string | null | undefined>('AllAdmins');
   const [isLogin, setIsLogin] = useState<boolean | null | undefined>(false);
 
   useEffect(() => {

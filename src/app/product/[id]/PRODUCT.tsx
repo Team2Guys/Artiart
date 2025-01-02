@@ -7,19 +7,19 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Product from 'components/Home/Product';
 import Loader from 'components/Loader/Loader';
-import { generateSlug} from 'Data/data';
+import { generateSlug } from 'Data/data';
 
 import Script from 'next/script'
 
- 
-const PRODUCT = async ({ id }:{ id: string }) => {
+
+const PRODUCT = async ({ id }: { id: string }) => {
   const parsedProduct = id ? id.toLowerCase() : null;
   const [products, setProducts] = useState([]);
   const [productDetail, setproductDetail] = useState(null);
   const [productsLoading, setProductsloading] = useState<boolean>(false);
 
 
-  
+
 
 
   useEffect(() => {
@@ -55,11 +55,6 @@ const PRODUCT = async ({ id }:{ id: string }) => {
 
     fetchData();
   }, []);
-
-
-
-
-
 
 
   return (

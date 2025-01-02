@@ -25,6 +25,7 @@ interface CategoryProps {
   canAddProduct: boolean;
   canDeleteProduct: boolean;
   setEditProduct: any;
+  canEditProduct:boolean
 }
 
 const Category: React.FC<CategoryProps> = ({
@@ -35,6 +36,7 @@ const Category: React.FC<CategoryProps> = ({
   canAddProduct,
   canDeleteProduct,
   setEditProduct,
+  canEditProduct
 }) => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -128,11 +130,13 @@ const Category: React.FC<CategoryProps> = ({
       key: 'Edit',
       render: (text: any, record: Product) => (
         <LiaEdit
-          className={'cursor-pointer'}
+       className={`${canEditProduct ? 'text-red-500 cursor-pointer' : ''} ${!canEditProduct ? 'cursor-not-allowed text-gray-400' : ''}`}
           size={20}
           onClick={() => {
-            setEditProduct(record);
-            setselecteMenu('Add Products');
+            if(canEditProduct){
+              setEditProduct(record);
+              setselecteMenu('Add Products');
+            }
           }}
         />
       ),
@@ -142,8 +146,7 @@ const Category: React.FC<CategoryProps> = ({
       key: 'action',
       render: (text: any, record: Product) => (
         <RiDeleteBin6Line
-          className={`${canDeleteProduct ? 'text-red-500 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-gray-400' : ''
-            }`}
+          className={`${canDeleteProduct ? 'text-red-500 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-gray-400' : ''}`}
           size={20}
           onClick={() => {
             if (canDeleteProduct) {
