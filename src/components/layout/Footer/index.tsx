@@ -9,6 +9,7 @@ import { HiOutlineMailOpen } from 'react-icons/hi';
 import { FiPhoneCall } from 'react-icons/fi';
 import { IoLocationOutline } from 'react-icons/io5';
 import { generateSlug } from 'Data/data';
+import { formatPhoneNumber } from 'config';
 
 const Footer = () => {
   const [category, setCategory] = useState<any[]>();
@@ -110,7 +111,11 @@ const Footer = () => {
                   <span className="text-[18px]">
                     <FiPhoneCall />
                   </span>
-                  <Link href={'tel:+971 58 820 0549'}>+971 58 820 0549</Link>
+                  <Link href={`tel:+${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}>
+                    {formatPhoneNumber(
+                      process.env.NEXT_PUBLIC_CONTACT_NUMBER as string,
+                    )}
+                  </Link>
                 </li>
                 <li className="cursor-pointer flex gap-3 items-center">
                   <span className="text-[20px]">
