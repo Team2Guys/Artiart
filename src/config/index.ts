@@ -1,6 +1,6 @@
-export const formatPhoneNumber = (number: string): string => {
-  // Remove non-numeric characters
-  const cleaned = number.replace(/\D/g, '');
+export const formatPhoneNumber = (number: string): string | any => {
+  if(!number) return 
+  const cleaned = number?.replace(/\D/g, '');
 
   // Check if the cleaned number has the correct length (for example, 971501945268 should have 12 digits)
   if (cleaned.length === 12) {
