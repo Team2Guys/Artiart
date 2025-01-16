@@ -1,3 +1,4 @@
+
 export const formatPhoneNumber = (number: string): string | any => {
   if(!number) return 
   const cleaned = number?.replace(/\D/g, '');

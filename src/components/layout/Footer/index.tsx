@@ -113,7 +113,7 @@ const Footer = () => {
                   </span>
                   <Link href={`tel:+${process.env.NEXT_PUBLIC_CONTACT_NUMBER}`}>
                     {formatPhoneNumber(
-                      process.env.NEXT_PUBLIC_CONTACT_NUMBER as string,
+                      process.env.NEXT_PUBLIC_CONTACT_NUMBER as any,
                     )}
                   </Link>
                 </li>
